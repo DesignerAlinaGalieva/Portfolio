@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Алина Галиева — продуктовый дизайнер. Веб-сервисы, мобильные приложения и сайты: от исследования до передачи в разработку.">
+<meta property="og:title" content="Алина Галиева — продуктовый дизайнер">
+<meta property="og:description" content="Портфолио: OZNA SCADA, Essence, Linux Massomer, OZNA Digital Solutions.">
+<meta property="og:image" content="photo.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Ctext x='16' y='23' font-family='Arial Black,sans-serif' font-size='20' fill='%23fff' text-anchor='middle'%3Eg%3C/text%3E%3C/svg%3E">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>Алина Галиева</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=IBM+Plex+Mono:wght@400;500&family=Onest:wght@400;500&display=swap">
+<style>
+/* Layout: слева закреплённая колонка (лого, о себе, фото, навигация, контакты),
+   справа прокручивается контент выбранного раздела. Машинописный моно-текст, крупные обложки.
+   ≥1024 две колонки · 640–1023 интро сверху + липкие вкладки · <640 компактно + нижняя CTA. */
+:root{
+  --bg:#FFFFFF; --ink:#111111; --muted:#6B6B68; --line:#E3E3E0; --tint:#F3F3F1;
+  --cta:#111111; --cta-ink:#FFFFFF; --ok:#1C9A55;
+  --f-logo:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --f-text:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --side:clamp(330px,30vw,500px); --pad:24px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E0E0E; --ink:#EDEDEA; --muted:#9A9A95; --line:#262625; --tint:#181817;
+  --cta:#EDEDEA; --cta-ink:#0E0E0E; --ok:#44C47F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E0E0E; --ink:#EDEDEA; --muted:#9A9A95; --line:#262625; --tint:#181817;
+  --cta:#EDEDEA; --cta-ink:#0E0E0E; --ok:#44C47F; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-mono);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:inherit;text-decoration:none}
+p{margin:0}
+h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+img{display:block;max-width:100%}
+.muted{color:var(--muted)}
+.label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* ── каркас ── */
+.page{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:1024px){
+  .page{display:grid;grid-template-columns:var(--side) minmax(0,1fr);gap:var(--pad);
+    padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px))}
+}
+
+/* ── левая колонка ── */
+.side{display:flex;flex-direction:column;gap:20px;padding-block:20px 8px}
+.logo{font-family:var(--f-logo);font-weight:700;font-size:clamp(34px,3.2vw,48px);line-height:.9;letter-spacing:-.04em;display:inline-block}
+.bio{font-size:15px;max-width:40ch}
+.status{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none;animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 55%,transparent)}70%,100%{box-shadow:0 0 0 8px transparent}}
+.side__mid{display:flex;flex-direction:column;align-items:flex-end;gap:18px}
+.photo{aspect-ratio:3/4;object-fit:cover;object-position:50% 20%;background:var(--tint)}
+.snav{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:16px}
+.snav a{color:var(--muted);transition:color .2s}
+.snav a:hover,.snav a[aria-current="page"]{color:var(--ink)}
+.snav a[aria-current="page"]::before{content:"→ "}
+.side__foot{display:grid;gap:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;height:50px;padding:0 22px;background:var(--cta);color:var(--cta-ink);font:500 14px/1 var(--f-mono);letter-spacing:.02em;border:0;cursor:pointer;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn svg{width:17px;height:17px;flex:none}
+.links{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 18px;font-size:14px}
+.links a,.mail{border-bottom:1px solid transparent;transition:border-color .2s}
+.links a:hover,.mail:hover{border-color:currentColor}
+.mail{font:inherit;color:inherit;background:none;border-top:0;border-left:0;border-right:0;padding:0;cursor:pointer;text-align:left}
+.links nav{display:flex;gap:18px}
+
+@media (min-width:1024px){
+  .side{position:sticky;top:0;height:100vh;height:100dvh;padding-block:calc(20px + env(safe-area-inset-top,0px)) calc(20px + env(safe-area-inset-bottom,0px));overflow:auto;scrollbar-width:none}
+  .side::-webkit-scrollbar{display:none}
+  .side__mid{margin-block:auto}
+  .photo{height:clamp(150px,30vh,320px);width:auto}
+}
+@media (min-width:1024px) and (max-height:760px){.bio{font-size:14px}.side{gap:14px}.photo{height:clamp(130px,24vh,200px)}}
+
+/* интро на планшете и телефоне */
+@media (max-width:1023px){
+  .side{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"logo logo" "bio photo";gap:14px 20px;padding-block:calc(16px + env(safe-area-inset-top,0px)) 20px}
+  .logo{grid-area:logo}.bio{grid-area:bio}
+  .side__mid{grid-area:photo;align-self:start}
+  .photo{width:clamp(96px,22vw,200px)}
+  .snav,.side__foot{display:none}
+}
+@media (max-width:639px){.bio{font-size:14px}}
+
+/* липкие вкладки (<1024) */
+.tabs{display:none}
+@media (max-width:1023px){
+  .tabs{display:flex;gap:24px;position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-block:1px solid var(--line);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:14px max(16px,env(safe-area-inset-left,0px));overflow-x:auto;scrollbar-width:none;font-size:15px}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs a{color:var(--muted);white-space:nowrap;padding-bottom:2px;border-bottom:1.5px solid transparent}
+  .tabs a[aria-current="page"]{color:var(--ink);border-color:var(--ink)}
+}
+
+/* ── правая часть ── */
+main{min-width:0;padding-block:20px 40px}
+@media (min-width:1024px){main{padding-block:calc(20px + env(safe-area-inset-top,0px)) 24px}}
+.view{animation:in .4s ease}
+@keyframes in{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* проекты */
+.works{display:grid;gap:44px}
+@media (min-width:1600px){.works{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 24px}}
+.work{display:grid;gap:14px}
+.work__img{overflow:hidden;background:var(--tint);aspect-ratio:16/10;max-width:100%}
+.work__img img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.work:hover .work__img img{transform:scale(1.025)}
+.work__cap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 20px;align-items:baseline}
+.work__cap h2{font-family:var(--f-logo);font-weight:500;font-size:clamp(18px,1.5vw,22px);letter-spacing:-.02em}
+.work__cap .yr{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.work__cap .tg{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
+.work__cap p{grid-column:1/-1;font-family:var(--f-text);font-size:15.5px;max-width:62ch;margin-top:4px}
+.nda{display:inline-block;margin-left:8px;font:500 11px/1 var(--f-mono);letter-spacing:.06em;padding:4px 6px;border:1px solid var(--line);color:var(--muted);vertical-align:middle}
+
+/* общие разделы */
+.head{display:grid;gap:14px;margin-bottom:clamp(28px,4vw,48px)}
+.head h1{font-family:var(--f-logo);font-weight:500;font-size:clamp(32px,4.4vw,72px);line-height:1;letter-spacing:-.035em}
+.lead{font-family:var(--f-text);font-size:clamp(17px,1.4vw,21px);line-height:1.5;max-width:52ch}
+.row{display:grid;gap:14px;padding-block:28px;border-top:1px solid var(--line)}
+@media (min-width:768px){.row{grid-template-columns:200px minmax(0,1fr);gap:32px}}
+.row__body{display:grid;gap:14px;font-family:var(--f-text);font-size:16px;max-width:64ch}
+.row__body .muted{font-size:15.5px}
+
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}
+@media (min-width:1280px){.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.metrics div{display:grid;gap:6px;align-content:start}
+.metrics strong{font-family:var(--f-logo);font-weight:500;font-size:clamp(24px,2.4vw,36px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.metrics span{font-size:13.5px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{font-size:13px;padding:6px 10px;border:1px solid var(--line)}
+.lines{display:grid}
+.lines div{display:grid;grid-template-columns:60px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.lines div:first-child{padding-top:0}
+.lines span{color:var(--muted);font-variant-numeric:tabular-nums}
+.lines small{display:block;color:var(--muted);font-size:13px}
+
+/* опыт */
+.job{display:grid;gap:12px;padding-block:28px;border-top:1px solid var(--line)}
+@media (min-width:768px){.job{grid-template-columns:200px minmax(0,1fr);gap:32px}}
+.job__when{font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.job__when .now{display:flex;align-items:center;gap:8px;color:var(--ok);margin-bottom:4px}
+.job h3{font-family:var(--f-logo);font-weight:500;font-size:clamp(18px,1.5vw,22px);letter-spacing:-.02em}
+.job h3 small{display:block;font-family:var(--f-mono);font-size:13.5px;font-weight:400;color:var(--muted);margin-top:6px;letter-spacing:0}
+.job ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-family:var(--f-text);font-size:15.5px;max-width:64ch}
+.job li{position:relative;padding-left:20px}
+.job li::before{content:"—";position:absolute;left:0;color:var(--muted)}
+.inline-links{display:flex;flex-wrap:wrap;gap:12px 24px;padding-top:28px;border-top:1px solid var(--line);font-size:14px}
+.inline-links a{border-bottom:1px solid currentColor}
+
+/* страница проекта */
+.back{display:inline-flex;gap:8px;font-size:14px;color:var(--muted);margin-bottom:28px}
+.back:hover{color:var(--ink)}
+.case-cover{background:var(--tint);margin-bottom:8px}
+.case-cover img{width:100%;height:auto}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px;padding-block:24px 4px}
+@media (min-width:1280px){.meta{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.meta div{display:grid;gap:4px;min-width:0}
+.meta dd{margin:0;font-size:14.5px}
+.note{font-size:13.5px;color:var(--muted);padding:12px 14px;background:var(--tint);margin-top:12px}
+.steps{display:grid}
+.steps div{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.steps div:first-child{padding-top:0}
+.steps span{font-family:var(--f-mono);font-size:13px;color:var(--muted);padding-top:2px}
+.steps b{font-weight:500;display:block}
+.steps p{color:var(--muted);font-size:15px}
+/* галерея кейса */
+.wide{display:grid;gap:20px;padding-block:28px;border-top:1px solid var(--line)}
+.gal{display:grid;gap:clamp(20px,2.4vw,36px) clamp(14px,1.6vw,24px)}
+@media (min-width:768px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gal figure{margin:0;display:grid;gap:10px;align-content:start;min-width:0}
+.gal .full{grid-column:1/-1}
+.gal figcaption{font-size:13.5px;color:var(--muted);max-width:70ch}
+.g-img{background:var(--tint)}
+.g-img img{width:100%;height:auto}
+.phones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2.2vw,36px);padding:clamp(18px,3.4vw,56px) clamp(18px,5vw,96px);background:var(--tint)}
+.phones img{width:100%;height:auto;border-radius:clamp(10px,1.2vw,18px);box-shadow:0 14px 34px rgb(0 0 0 / .10)}
+@media (max-width:639px){
+  .phones{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;padding:18px}
+  .phones img{scroll-snap-align:center}
+}
+.frame{height:clamp(420px,72vh,780px);overflow-y:auto;background:var(--tint);border:1px solid var(--line);overscroll-behavior:contain}
+.frame img{width:100%;height:auto}
+.hint{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:20px}
+.results div{display:grid;gap:6px;align-content:start}
+.results strong{font-family:var(--f-logo);font-weight:500;font-size:clamp(24px,2.4vw,34px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.results span{font-size:13.5px;color:var(--muted)}
+.next{display:grid;gap:12px;padding-block:32px;border-top:1px solid var(--line)}
+.next h2{font-family:var(--f-logo);font-size:clamp(26px,3.2vw,48px);letter-spacing:-.03em;transition:opacity .2s}
+.next:hover h2{opacity:.6}
+
+/* блок контактов внизу каждого раздела */
+.contact{margin-top:clamp(56px,7vw,96px);background:var(--ink);color:var(--bg);padding:clamp(24px,4vw,48px);display:grid;gap:24px}
+.contact h2{font-family:var(--f-logo);font-size:clamp(28px,3.6vw,56px);line-height:1.02;letter-spacing:-.035em}
+.contact p{font-family:var(--f-text);font-size:16px;max-width:48ch;opacity:.75}
+.contact__row{display:flex;flex-wrap:wrap;gap:12px}
+.contact .btn{background:var(--bg);color:var(--ink)}
+.contact .ghost{display:flex;align-items:center;height:50px;padding:0 20px;border:1px solid color-mix(in srgb,var(--bg) 35%,var(--ink));font-size:14px;color:var(--bg);background:none;font-family:var(--f-mono);cursor:pointer;overflow-wrap:anywhere}
+.contact .ghost:hover{border-color:var(--bg)}
+
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:20px;font-size:13px;color:var(--muted)}
+
+/* нижняя CTA на телефоне и планшете */
+.mcta{display:none}
+@media (max-width:1023px){
+  .mcta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(to top,var(--bg) 65%,transparent);transition:transform .3s}
+  .mcta .btn{flex:1}
+  .mcta.hide{transform:translateY(110%)}
+  main{padding-bottom:96px}
+}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;font-size:13px;z-index:80}
+</style>
+</head>
+<body>
+
+
+<div class="page">
+  <aside class="side">
+    <a class="logo" href="#projects" aria-label="Алина Галиева, на главную">galieva</a>
+    <p class="bio">Алина Галиева — продуктовый дизайнер из Уфы. Проектирую веб-сервисы, мобильные приложения и сайты: от исследования и сценариев до дизайн-системы и передачи в разработку.</p>
+    <div class="side__mid">
+      <img class="photo" src="photo.jpg" alt="Алина Галиева" width="900" height="900">
+      <nav class="snav" aria-label="Разделы">
+        <a href="#projects" data-v="projects">Проекты</a>
+        <a href="#about" data-v="about">Обо мне</a>
+        <a href="#experience" data-v="experience">Опыт</a>
+      </nav>
+    </div>
+    <div class="side__foot">
+      <a class="btn" href="https://t.me/AL_GALIEVA" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 3.6 2.9 10.8c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.3-1.5zM9.6 14.3l-.4 4-1.4-4.6 10.1-6.4-8.3 7z"/></svg>
+        Написать в Telegram</a>
+      <div class="links">
+        <button class="mail" type="button" data-copy title="Скопировать почту">karpomiko3@gmail.com</button>
+        <nav aria-label="Ссылки">
+          <a href="https://ufa.hh.ru/resume/de832448ff107c7ecb0039ed1f324b61776256" target="_blank" rel="noopener">hh</a>
+          <a href="https://www.behance.net/karpomiko37e9c" target="_blank" rel="noopener">Behance</a>
+          <a href="https://drive.google.com/drive/folders/1XCcBCXhL0phLjy4q3YbrAp1-EKZUDD0m?usp=sharing" target="_blank" rel="noopener">CV</a>
+        </nav>
+      </div>
+    </div>
+  </aside>
+
+  <nav class="tabs" aria-label="Разделы">
+    <a href="#projects" data-v="projects">Проекты</a>
+    <a href="#about" data-v="about">Обо мне</a>
+    <a href="#experience" data-v="experience">Опыт</a>
+  </nav>
+
+  <main>
+    <!-- ПРОЕКТЫ -->
+    <section class="view" id="v-projects" aria-label="Проекты">
+      <div class="works" id="works"></div>
+    </section>
+
+    <!-- ОБО МНЕ -->
+    <section class="view" id="v-about" hidden>
+      <div class="head">
+        <span class="label">Обо мне</span>
+        <h1>делаю интерфейсы понятнее, процессы быстрее, решения системнее</h1>
+      </div>
+      <div class="row"><span class="label">Коротко</span>
+        <div class="row__body">
+          <p>Мне интересно не просто рисовать экраны, а разбираться в логике продукта и поведении пользователей, чтобы интерфейс действительно облегчал людям их задачи.</p>
+          <p class="muted">Работала с мобильным e-commerce, лендингами, веб-сервисами и сложными системами с большим количеством сценариев. Сейчас выстраиваю работу с ИИ, чтобы ускорять рутину и больше времени отдавать исследованиям и решениям.</p>
+        </div></div>
+      <div class="row"><span class="label">В цифрах</span>
+        <div class="metrics">
+          <div><strong>3+ года</strong><span>в продуктовом и UX/UI-дизайне</span></div>
+          <div><strong>100+</strong><span>спроектированных экранов</span></div>
+          <div><strong>3.2 → 4.5</strong><span>индекс удобства (CES) ключевых сценариев</span></div>
+          <div><strong>−30%</strong><span>времени на проектирование после внедрения дизайн-системы</span></div>
+        </div></div>
+      <div class="row"><span class="label">Как работаю</span>
+        <div class="steps">
+          <div><span>01</span><p><b>Исследую</b>Интервью, анализ конкурентов, CJM, уточнение требований.</p></div>
+          <div><span>02</span><p><b>Проектирую</b>User flow и прототипы, сокращаю лишние шаги в сценариях.</p></div>
+          <div><span>03</span><p><b>Проверяю</b>Модерируемые и коридорные UX-тесты, A/B-тесты.</p></div>
+          <div><span>04</span><p><b>Систематизирую</b>UI kit и дизайн-система с токенами и документацией.</p></div>
+          <div><span>05</span><p><b>Передаю</b>Дизайн-ревью и согласование решений с разработкой.</p></div>
+        </div></div>
+      <div class="row"><span class="label">Навыки</span>
+        <div class="tags"><span>Figma</span><span>ProtoPie</span><span>UX-исследования</span><span>A/B-тесты</span><span>CJM</span><span>User Flow</span><span>Empathy map</span><span>Прототипирование</span><span>Дизайн-системы</span><span>Atomic Design</span><span>Mobile</span><span>Адаптивный дизайн</span><span>Photoshop</span><span>Illustrator</span><span>English B1</span></div></div>
+      <div class="row"><span class="label">Обучение</span>
+        <div class="lines">
+          <div><span>2027</span><p>Продуктовый дизайнер<small>Формфактор Технологии</small></p></div>
+          <div><span>2023</span><p>UX/UI-дизайнер<small>Contented</small></p></div>
+          <div><span>2022</span><p>Графический дизайнер<small>Логомашина</small></p></div>
+          <div><span>2022</span><p>Разработчик веб-приложений<small>Институт цифровых компетенций</small></p></div>
+          <div><span>2020</span><p>Колледж технологии и дизайна<small>Уфа</small></p></div>
+        </div></div>
+      <div class="row"><span class="label">Вне работы</span>
+        <div class="row__body"><p>Рисую, катаюсь на велосипеде, играю в компьютерные и настольные игры, вожу партии в D&amp;D.</p></div></div>
+    </section>
+
+    <!-- ОПЫТ -->
+    <section class="view" id="v-experience" hidden>
+      <div class="head">
+        <span class="label">Опыт</span>
+        <h1>где я работала</h1>
+      </div>
+      <article class="job">
+        <div class="job__when"><span class="now"><span class="dot" aria-hidden="true"></span>сейчас</span>июнь 2026 — н. в.</div>
+        <div><h3>Мегатехника<small>UX/UI-дизайнер · частичная занятость</small></h3>
+          <ul>
+            <li>Редизайн всех страниц корпоративного сайта на основе анализа аудитории, UX-аудита и анализа конкурентов</li>
+            <li>Проектирую новые страницы и улучшаю старые по задачам маркетинга, в рамках брендбука</li>
+            <li>Собираю UI kit для унификации компонентов и ускорения разработки</li>
+          </ul></div>
+      </article>
+      <article class="job">
+        <div class="job__when">ноя 2023 — дек 2025<br>2 года 2 месяца</div>
+        <div><h3>ОЗНА<small>UX/UI-дизайнер · единственный дизайнер на двух продуктах</small></h3>
+          <ul>
+            <li>Провела первые в компании модерируемые UX-тестирования и глубинные интервью</li>
+            <li>Сократила время типовых сценариев примерно на 20%, подняла CES с 3.2 до 4.5</li>
+            <li>Объединила три UI kit в единую дизайн-систему: −30% времени на проектирование, −25% вопросов от разработчиков</li>
+            <li>Адаптировала интерфейс под планшеты: крупные touch-зоны, меньше ошибочных нажатий</li>
+          </ul></div>
+      </article>
+      <article class="job">
+        <div class="job__when">янв 2023 — авг 2023<br>8 месяцев</div>
+        <div><h3>Upwork<small>Дизайнер · фриланс</small></h3>
+          <ul>
+            <li>Essence: мобильное приложение магазина одежды, полный цикл за 2,5 недели</li>
+            <li>Официальный визовый центр: логотип, векторная система и брендбук с нуля</li>
+            <li>Интернет-магазин: веб-баннеры, карточки товаров, контент для Telegram</li>
+          </ul></div>
+      </article>
+      <div class="inline-links">
+        <a href="https://drive.google.com/drive/folders/1XCcBCXhL0phLjy4q3YbrAp1-EKZUDD0m?usp=sharing" target="_blank" rel="noopener">Скачать резюме</a>
+        <a href="https://ufa.hh.ru/resume/de832448ff107c7ecb0039ed1f324b61776256" target="_blank" rel="noopener">Резюме на hh.ru</a>
+      </div>
+    </section>
+
+    <!-- ПРОЕКТ (шаблон) -->
+    <section class="view" id="v-case" hidden></section>
+
+    <!-- КОНТАКТЫ -->
+    <section class="contact" id="contacts">
+      <h2>давайте поработаем вместе</h2>
+      <p>Ищу полную занятость в продуктовой команде. Быстрее всего отвечаю в Telegram.</p>
+      <div class="contact__row">
+        <a class="btn" href="https://t.me/AL_GALIEVA" target="_blank" rel="noopener">Telegram @AL_GALIEVA</a>
+        <button class="ghost" type="button" data-copy>karpomiko3@gmail.com</button>
+        <a class="ghost" href="https://www.behance.net/karpomiko37e9c" target="_blank" rel="noopener">Behance</a>
+      </div>
+    </section>
+    <footer class="foot"><span>© 2026 Алина Галиева</span><a href="https://setka.ru/users/019c483d-4753-7e61-96f2-5ed94f1f93f8" target="_blank" rel="noopener">Статьи в Сетке</a></footer>
+  </main>
+</div>
+
+<div class="mcta" id="mcta"><a class="btn" href="https://t.me/AL_GALIEVA" target="_blank" rel="noopener">Написать в Telegram</a></div>
+
+<script>
+/* ═══ ПРОЕКТЫ ═══
+   Новый кейс: скопируйте объект, задайте уникальный id (латиница/цифры/дефис),
+   положите обложку в  и заполните поля. Карточка и страница соберутся сами.
+   focus — какая часть обложки остаётся видна при обрезке в карточке.
+   gallery — изображения кейса: {src, cap} — обычная картинка (w:'full' — во всю ширину),
+   {t:'phones', src:[3 экрана]} — ряд телефонов, {t:'scroll', src} — длинная страница в окне с прокруткой. */
+const PROJECTS = [
+  { id:'scada', title:'OZNA SCADA', nda:true, img:'scada.jpg', focus:'50% 70%', year:'2023–2025',
+    tags:'Web-сервис · Desktop · Редактор',
+    short:'Редактор мнемосхем и мониторинг объектов. Упростила ключевые сценарии и снизила риск ошибок пользователей.',
+    meta:{'Роль':'UX/UI-дизайнер, единственный в команде','Период':'ноя 2023 — дек 2025','Платформа':'Desktop, web','Команда':'Agile, 2 команды разработки'},
+    task:['Пользователи настраивают мнемосхемы объектов и следят за их состоянием. Сценарии были перегружены лишними шагами, а интерфейсы трёх продуктов развивались разрозненно.','Нужно было упростить ключевые сценарии и сделать так, чтобы разработка собирала экраны быстрее и единообразно.'],
+    process:[['Интервью','Составила сценарии глубинных интервью и провела первые самостоятельно.'],['UX-тестирования','Инициировала первые в компании модерируемые тесты, а также коридорные и A/B-тесты.'],['Карта проблем','Собрала таблицу проблем, оценила критичность, сформулировала гипотезы вместе с менеджером.'],['Проектирование','Переработала сценарии мониторинга и настройки, спроектировала 100+ новых экранов.'],['Дизайн-система','Объединила три UI kit в систему с токенами цвета, типографики и отступов, подключила 2 команды разработки.']],
+    gallery:[
+      {src:'sc-editor.jpg',w:'full',cap:'Редактор мнемосхем: дерево объектов слева, холст в центре, свойства и привязка сигнала справа. Статусы задвижек видны прямо на схеме.'},
+      {src:'sc-table.jpg',cap:'Журнал замеров по скважинам: фильтры-чипы, выбор периода, экспорт и график изменений под таблицей.'},
+      {src:'sc-chart.jpg',cap:'Сравнение показаний виртуального расходомера и датчика потока на одном графике с общим курсором.'}],
+    results:[['~20%','быстрее отрисовка типовых мнемосхем'],['3.2 → 4.5','CES ключевых сценариев из 5'],['−30%','времени на проектирование'],['−25%','вопросов от разработчиков']] },
+  { id:'landing', title:'OZNA Digital Solutions', img:'landing.jpg', focus:'50% 40%', year:'2024',
+    tags:'Лендинг · Desktop · Mobile',
+    short:'Редизайн лендинга компании: новая структура, подача информации и визуальная иерархия.',
+    meta:{'Роль':'UX/UI-дизайнер','Компания':'ОЗНА','Платформа':'Desktop, mobile','Тип':'Редизайн'},
+    task:['Лендинг плохо доносил ценность продуктов: информация шла без чёткой структуры, а визуальная иерархия не вела посетителя к цели.','Цель редизайна: усилить маркетинговую подачу и выстроить логику страницы.'],
+    process:[['Аудит','Разобрала текущую страницу и выделила, что мешает восприятию.'],['Структура','Пересобрала порядок блоков и логику подачи информации.'],['Дизайн','Выстроила визуальную иерархию и адаптировала страницу под мобильные.']],
+    gallery:[
+      {t:'scroll',src:'ld-main.jpg',cap:'Главная: цифры доверия на первом экране, направления, кейсы и каталог решений с подбором через AI-поиск.'},
+      {t:'scroll',src:'ld-product.jpg',cap:'Страница продукта АвтоГДИС: проблема, текущий и новый цикл, эффект в деньгах и форма заявки.'},
+      {src:'ld-mobile.jpg',w:'full',cap:'Мобильная версия: главная, каталог готовых решений с вкладками и страница продукта.'}],
+    results:[['Новая структура','последовательная подача информации'],['Desktop + mobile','адаптивная версия страницы']] },
+  { id:'massomer', title:'Linux Massomer', img:'massomer.jpg', focus:'50% 50%', year:'2024–2025',
+    tags:'Планшет · Touch · Полевые условия',
+    short:'Интерфейс расходомера для планшета. Повысила читаемость данных и сделала управление удобным даже в перчатках.',
+    meta:{'Роль':'UX/UI-дизайнер','Компания':'ОЗНА','Платформа':'Планшет, Linux','Условия':'Работа в перчатках на улице'},
+    task:['Оператор пользуется планшетом на улице и в перчатках. Мелкие элементы и плотные экраны приводили к ошибочным нажатиям и плохой читаемости.','Задача: адаптировать продукт под планшет и спроектировать новые экраны внутри него.'],
+    process:[['Анализ условий','Изучила, где и как используется устройство и какие данные нужны в первую очередь.'],['Тест «до»','Зафиксировала исходное количество ошибочных нажатий.'],['Редизайн','Увеличила touch-зоны и кнопки, перестроила иерархию данных.'],['Тест «после»','Повторила тестирование и сравнила с исходными результатами.']],
+    gallery:[
+      {src:'ms-scheme.jpg',w:'full',cap:'Мнемосхема замерной установки: крупные значения, цветовые статусы и итоговые показатели внизу экрана.'},
+      {src:'ms-switch.jpg',cap:'Диагностика переключателя скважин: каждая проверка в отдельной строке, неисправность выделена цветом.'},
+      {src:'ms-measure.jpg',cap:'Таблица измерений: фильтры сверху, крупные строки и пункты меню, удобные для нажатия в перчатках.'}],
+    results:[['Крупнее','touch-зоны и кнопки для работы в перчатках'],['Меньше','ошибочных нажатий по тестам до и после']] },
+  { id:'essence', title:'Essence', img:'essence.jpg', focus:'50% 50%', year:'2023',
+    tags:'E-commerce · Mobile · Fashion',
+    short:'Мобильное приложение магазина одежды. Полный цикл за 2,5 недели: от исследований до интерактивного прототипа.',
+    meta:{'Роль':'Дизайнер, полный цикл','Период':'июль — август 2023','Платформа':'iOS, Android','Срок':'2,5 недели'},
+    task:['Магазину одежды нужно было приложение с удобным каталогом, подбором образов и быстрым оформлением заказа.','Задача: пройти путь от исследований до макетов, готовых к разработке, за 2,5 недели.'],
+    process:[['Исследование','Конкурентный анализ, CJM и user flow основных сценариев.'],['Сценарии','Каталог, карточка товара, редактирование состава образа, чекаут.'],['Тесты','Коридорные тесты паттерна редактирования образов.'],['UI и прототип','UI kit и интерактивный прототип с микроанимациями в ProtoPie.']],
+    gallery:[
+      {src:'es-banner.jpg',w:'full',cap:'Ключевые экраны приложения.'},
+      {t:'phones',w:'full',src:['es-home.jpg','es-cats.jpg','es-looks.jpg'],cap:'Главная, категории и подборки образов: вход в каталог через готовые стили, а не только через фильтры.'},
+      {t:'phones',w:'full',src:['es-look.jpg','es-cart.jpg','es-profile.jpg'],cap:'Образ целиком, корзина с выбором позиций и профиль с заказами и трек-номером.'}],
+    results:[['2,5 недели','от исследований до передачи в разработку'],['UI kit','и интерактивный прототип в ProtoPie']] }
+];
+
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nda = p => p.nda ? '<span class="nda">NDA</span>' : '';
+
+document.getElementById('works').innerHTML = PROJECTS.map(p=>`
+  <a class="work" href="#${p.id}">
+    <div class="work__img"><img src="${p.img}" alt="${esc(p.title)}" loading="lazy" style="object-position:${p.focus}"></div>
+    <div class="work__cap"><h2>${esc(p.title)}${nda(p)}</h2><span class="yr">${esc(p.year)}</span>
+      <span class="tg">${esc(p.tags)}</span><p>${esc(p.short)}</p></div>
+  </a>`).join('');
+
+function caseHTML(p){
+  const i = PROJECTS.indexOf(p), n = PROJECTS[(i+1)%PROJECTS.length];
+  const row = (l,b)=>`<div class="row"><span class="label">${l}</span>${b}</div>`;
+  return `
+  <a class="back" href="#projects">← Все проекты</a>
+  <div class="head"><span class="label">${esc(p.tags)} · ${esc(p.year)}</span><h1>${esc(p.title)}${nda(p)}</h1><p class="lead">${esc(p.short)}</p></div>
+  <div class="case-cover"><img src="${p.img}" alt="${esc(p.title)}"></div>
+  ${p.nda?'<p class="note">Проект под NDA: показаны обезличенные экраны. Подробности расскажу на встрече.</p>':''}
+  <dl class="meta">${Object.entries(p.meta).map(([k,v])=>`<div><dt class="label">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+  ${row('Задача',`<div class="row__body">${p.task.map((t,j)=>`<p${j?' class="muted"':''}>${esc(t)}</p>`).join('')}</div>`)}
+  ${row('Процесс',`<div class="steps">${p.process.map((s,j)=>`<div><span>${String(j+1).padStart(2,'0')}</span><p><b>${esc(s[0])}</b>${esc(s[1])}</p></div>`).join('')}</div>`)}
+  <div class="wide"><span class="label">Решения</span><div class="gal">${p.gallery.map(g=>{
+    const cls = g.w==='full' ? ' class="full"' : '';
+    if(g.t==='phones') return `<figure${cls}><div class="phones">${g.src.map(s=>`<img src="${s}" alt="" loading="lazy">`).join('')}</div><figcaption>${esc(g.cap)}</figcaption></figure>`;
+    if(g.t==='scroll') return `<figure${cls}><div class="frame" tabindex="0" aria-label="${esc(g.cap)}"><img src="${g.src}" alt="${esc(g.cap)}" loading="lazy"></div><figcaption>${esc(g.cap)} <span class="hint">· прокрутите</span></figcaption></figure>`;
+    return `<figure${cls}><div class="g-img"><img src="${g.src}" alt="${esc(g.cap)}" loading="lazy"></div><figcaption>${esc(g.cap)}</figcaption></figure>`;
+  }).join('')}</div></div>
+  ${row('Результаты',`<div class="results">${p.results.map(r=>`<div><strong>${esc(r[0])}</strong><span>${esc(r[1])}</span></div>`).join('')}</div>`)}
+  <a class="next" href="#${n.id}"><span class="label">Следующий проект</span><h2>${esc(n.title)} →</h2></a>`;
+}
+
+/* ═══ переключение разделов по ссылке ═══ */
+const VIEWS = ['projects','about','experience'];
+const tabsEl = document.querySelector('.tabs');
+function route(){
+  const id = location.hash.slice(1) || 'projects';
+  const p = PROJECTS.find(x=>x.id===id);
+  const view = p ? 'case' : (VIEWS.includes(id) ? id : 'projects');
+  if(p) document.getElementById('v-case').innerHTML = caseHTML(p);
+  ['projects','about','experience','case'].forEach(v=>document.getElementById('v-'+v).hidden = v!==view);
+  const navKey = p ? 'projects' : view;
+  document.querySelectorAll('[data-v]').forEach(a=>{ if(a.dataset.v===navKey) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  document.title = p ? `${p.title} — Алина Галиева` : 'Алина Галиева';
+  // на десктопе — наверх; на мобильных — к началу контента под вкладками
+  const narrow = matchMedia('(max-width:1023px)').matches;
+  if(route.ready){
+    if(!narrow) window.scrollTo({top:0, behavior:'instant'});
+    else if(window.scrollY > tabsEl.offsetTop) window.scrollTo({top:tabsEl.offsetTop, behavior:'instant'});
+  }
+  route.ready = true;
+}
+/* типографика: короткие слова (в, и, из, для…) и тире не остаются в конце строки */
+const SHORT = /(^|[\s(«"—])([а-яёА-ЯЁa-zA-Z]{1,3}|ДЛЯ|для|без|под|над|при|про|что|как|или)\s+/g;
+function typograph(root){
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode:n=>/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  let n; while((n = w.nextNode())){
+    let t = n.nodeValue, prev;
+    if(!t.trim()) continue;
+    do{ prev = t; t = t.replace(SHORT, (m,a,b)=>a+b+' '); }while(t!==prev);
+    t = t.replace(/\s+—/g,' —').replace(/(\d)\s+(?=[а-яёА-ЯЁ%])/g,'$1 ');
+    if(t!==n.nodeValue) n.nodeValue = t;
+  }
+}
+window.addEventListener('hashchange', ()=>{ route(); typograph(document.getElementById('v-case')); });
+route();
+typograph(document.body);
+
+/* копирование почты */
+let toastT;
+function toast(msg){
+  let t = document.querySelector('.toast');
+  if(!t){ t = document.createElement('div'); t.className='toast'; t.setAttribute('role','status'); document.body.append(t); }
+  t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(()=>t.hidden=true, 2200);
+}
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>{
+  const mail = 'karpomiko3@gmail.com';
+  const fail = ()=>{ const r=document.createRange(); r.selectNodeContents(b); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('Почта выделена — скопируйте её'); };
+  try{ navigator.clipboard.writeText(mail).then(()=>toast('Почта скопирована'), fail); }catch(_){ fail(); }
+}));
+
+/* прятать нижнюю кнопку, когда виден блок контактов */
+const mcta = document.getElementById('mcta');
+new IntersectionObserver(([e])=>mcta.classList.toggle('hide', e.isIntersecting),{threshold:.2}).observe(document.getElementById('contacts'));
+</script>
+
+</body>
+</html>
