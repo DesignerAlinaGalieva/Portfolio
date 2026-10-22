@@ -50,24 +50,23 @@ img{display:block;max-width:100%}
 
 /* ── шапка ── */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.top .wrap{height:var(--top);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
-.logo{font-family:var(--f-logo);font-weight:700;font-size:22px;letter-spacing:-.04em;line-height:1;justify-self:start}
-.nav{display:flex;gap:clamp(14px,3vw,40px);font-size:14px}
+.top .wrap{height:var(--top);display:flex;align-items:center;gap:16px}
+.logo{font-family:var(--f-logo);font-weight:700;font-size:22px;letter-spacing:-.04em;line-height:1;flex:none}
+.nav{flex:1;display:flex;justify-content:center;gap:clamp(14px,3vw,40px);font-size:14px;min-width:0}
 .nav a{color:var(--muted);padding-block:4px;white-space:nowrap;background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;transition:color .25s,background-size .35s var(--ease)}
 .nav a:hover{color:var(--ink)}
 .nav a[aria-current="true"]{color:var(--ink);background-size:100% 1.5px}
-.top__right{display:flex;align-items:center;gap:20px;justify-self:end}
-.clock{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.top__right{flex:none}
+.clock{font-variant-numeric:tabular-nums}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:44px;padding:0 20px;background:var(--cta);color:var(--cta-ink);font:500 14px/1 var(--f-mono);letter-spacing:.02em;border:0;cursor:pointer;white-space:nowrap;transition:transform .25s var(--ease),opacity .2s}
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:none}
 .btn svg{width:16px;height:16px;flex:none}
 .top .btn{height:38px;padding:0 16px;font-size:13px}
-@media (max-width:1023px){.clock{display:none}}
 @media (max-width:639px){
-  .top .wrap{grid-template-columns:auto 1fr auto;gap:12px}
+  .top .wrap{gap:12px}
   .logo{font-size:18px}
-  .nav{justify-content:center;gap:12px;font-size:12.5px}
+  .nav{gap:12px;font-size:12.5px}
   .top .btn{width:38px;padding:0}
   .top .btn span{display:none}
 }
@@ -77,6 +76,7 @@ img{display:block;max-width:100%}
 .dock .wrap{height:var(--dock);display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:12.5px}
 .dock a,.dock button{color:var(--muted);transition:color .2s;white-space:nowrap}
 .dock a:hover,.dock button:hover{color:var(--ink)}
+.dock .clock{color:var(--muted);white-space:nowrap}
 .dock button{font:inherit;background:none;border:0;padding:0;cursor:pointer}
 @media (max-width:639px){.dock .wrap{font-size:12px;gap:10px}.dock .hide-s{display:none}}
 
@@ -88,22 +88,24 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 /* интро: целиком помещается в первый экран */
 .intro{--h:calc(100svh - var(--top) - var(--dock) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
   min-height:min(var(--h),760px);display:grid;gap:20px 48px;padding-block:clamp(20px,4svh,48px);align-content:center}
-.intro h1{font-family:var(--f-logo);font-weight:700;font-size:clamp(42px,min(8vw,13.5svh),148px);line-height:.88;letter-spacing:-.055em;text-transform:lowercase}
+.intro h1{font-family:var(--f-logo);font-weight:700;font-size:clamp(42px,min(8vw,12.5svh),148px);line-height:.88;letter-spacing:-.055em;text-transform:lowercase}
 .intro h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
 .intro h1 .ln>span{display:block}
 .intro__bio{font-size:clamp(14px,1.1vw,16.5px);max-width:42ch;display:grid;gap:14px}
-.intro__bio .muted{font-size:13px}
+.intro__cta{display:flex;flex-wrap:wrap;gap:10px}
 .intro__photo{margin:0;justify-self:end;width:min(36vw, calc(var(--h) - 2 * clamp(20px,4svh,48px)), 560px)}
 .intro__photo img{width:100%;height:auto;aspect-ratio:1/1;background:#000}
 @media (min-width:768px){
-  .intro{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name photo" "bio photo";align-items:end}
+  .intro{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name photo" "bio photo" "cta photo";align-items:end}
   .intro h1{grid-area:name;align-self:end}
   .intro__bio{grid-area:bio;align-self:start}
+  .intro__cta{grid-area:cta;align-self:start}
   .intro__photo{grid-area:photo;align-self:center}
 }
 @media (max-width:767px){
-  .intro{min-height:0;grid-template-columns:minmax(0,1fr) 112px;grid-template-areas:"name name" "bio photo";align-items:start;padding-block:28px 40px}
+  .intro{min-height:0;grid-template-columns:minmax(0,1fr) 112px;grid-template-areas:"name name" "bio photo" "cta cta";align-items:start;padding-block:28px 40px}
   .intro h1{grid-area:name}.intro__bio{grid-area:bio;font-size:14px}
+  .intro__cta{grid-area:cta}.intro__cta>*{flex:1 1 auto;justify-content:center}
   .intro__photo{grid-area:photo;width:112px}
 }
 
@@ -186,6 +188,27 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 .steps b{font-weight:500;display:block;margin-bottom:6px;color:var(--ink)}
 .steps p{color:var(--muted);font-family:var(--f-text);font-size:15.5px;line-height:1.6}
 .steps p b{font-family:var(--f-mono);font-size:15px}
+/* сегменты пользователей и сравнение с конкурентами */
+.segs{display:grid;gap:40px 32px}
+@media (min-width:1024px){.segs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.seg{display:grid;gap:10px;align-content:start}
+.seg h3{font-family:var(--f-logo);font-weight:500;font-size:clamp(20px,1.7vw,26px);letter-spacing:-.02em}
+.seg__role{font-family:var(--f-text);font-size:15.5px;color:var(--muted);margin-bottom:12px}
+.seg ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;font-family:var(--f-text);font-size:16px;line-height:1.6}
+.seg li{position:relative;padding-left:22px}
+.seg li::before{content:"—";position:absolute;left:0;color:var(--muted)}
+.cmp{display:grid}
+.cmp__names{font-size:14px;margin-bottom:24px}
+.cmp__head{display:none}
+.cmp__row{display:grid;gap:12px;padding-block:20px;border-top:1px solid var(--line);font-family:var(--f-text);font-size:15.5px;line-height:1.6}
+.cmp__row b{display:block;font-family:var(--f-mono);font-weight:500;font-size:15px;margin-bottom:6px}
+.cmp__row div p{color:var(--muted)}
+.cmp__ours .label{display:block;margin-bottom:4px}
+@media (min-width:768px){
+  .cmp__head{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;padding-bottom:12px}
+  .cmp__row{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+  .cmp__ours .label{display:none}
+}
 .wide{display:grid;gap:28px;padding-block:clamp(36px,4.5vw,64px);border-top:1px solid var(--line)}
 .gal{display:grid;gap:clamp(32px,3.4vw,52px) clamp(16px,1.8vw,28px)}
 @media (min-width:768px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -228,6 +251,7 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
   .intro h1 .ln>span{animation:lineUp 1s var(--ease) both}
   .intro h1 .ln:nth-child(2)>span{animation-delay:.08s}
   .intro__bio{animation:fadeUp .9s .25s var(--ease) both}
+  .intro__cta{animation:fadeUp .9s .38s var(--ease) both}
   .intro__photo img{animation:unveil 1.2s .1s var(--ease) both}
   @keyframes lineUp{from{transform:translateY(105%)}to{transform:none}}
   @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -256,7 +280,6 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
       <a href="#experience" data-s="experience">Опыт</a>
     </nav>
     <div class="top__right">
-      <span class="clock" id="clock">Уфа, UTC+5</span>
       <a class="btn" href="https://t.me/AL_GALIEVA" target="_blank" rel="noopener" aria-label="Написать в Telegram">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 3.6 2.9 10.8c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.3-1.5zM9.6 14.3l-.4 4-1.4-4.6 10.1-6.4-8.3 7z"/></svg><span>Написать в Telegram</span></a>
     </div>
@@ -269,7 +292,10 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
       <h1><span class="ln"><span>алина</span></span><span class="ln"><span>галиева</span></span></h1>
       <div class="intro__bio">
         <p>Продуктовый дизайнер. Проектирую веб-сервисы, мобильные приложения и сайты: от исследования и сценариев до дизайн-системы и передачи в разработку.</p>
-        <p class="muted">Уфа · 3+ года в продуктовом дизайне</p>
+      </div>
+      <div class="intro__cta">
+        <a class="btn" href="https://t.me/AL_GALIEVA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 3.6 2.9 10.8c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.3-1.5zM9.6 14.3l-.4 4-1.4-4.6 10.1-6.4-8.3 7z"/></svg>Написать в Telegram</a>
+        <button class="ghost" type="button" data-copy title="Скопировать почту">karpomiko3@gmail.com</button>
       </div>
       <figure class="intro__photo"><img src="photo.jpg" alt="Алина Галиева" width="900" height="900"></figure>
     </section>
@@ -312,7 +338,7 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
           <div><span>2020</span><p>Колледж технологии и дизайна<small>Уфа</small></p></div>
         </div></div>
       <div class="row"><span class="label">Вне работы</span>
-        <div class="row__body"><p>Рисую, катаюсь на велосипеде, играю в компьютерные и настольные игры, вожу партии в D&amp;D.</p></div></div>
+        <div class="row__body"><p>Рисую, катаюсь на велосипеде, играю в компьютерные и настольные игры, в том числе в D&amp;D.</p></div></div>
     </section>
 
     <!-- ОПЫТ -->
@@ -377,6 +403,7 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
     <a href="https://ufa.hh.ru/resume/de832448ff107c7ecb0039ed1f324b61776256" target="_blank" rel="noopener">hh.ru</a>
     <a href="https://www.behance.net/karpomiko37e9c" target="_blank" rel="noopener">Behance</a>
     <a class="hide-s" href="https://setka.ru/users/019c483d-4753-7e61-96f2-5ed94f1f93f8" target="_blank" rel="noopener">Статьи в Сетке</a>
+    <span class="clock hide-s" id="clock">Уфа, UTC+5</span>
   </div>
 </div>
 
@@ -386,14 +413,32 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
    положите обложку в  и заполните поля. Карточка и страница соберутся сами.
    focus — какая часть обложки остаётся видна при обрезке в карточке.
    gallery — изображения кейса: {src, cap} — обычная картинка (w:'full' — во всю ширину),
-   {t:'phones', src:[3 экрана]} — ряд телефонов, {t:'scroll', src} — длинная страница в окне с прокруткой. */
+   {t:'phones', src:[3 экрана]} — ряд телефонов, {t:'scroll', src} — длинная страница в окне с прокруткой.
+   Необязательные блоки: users — сегменты {who, role, pains:[...]},
+   compare — {names, rows:[[проблема, как у конкурентов, как решили мы]]}. */
 const PROJECTS = [
   { id:'scada', title:'OZNA SCADA', nda:true, img:'scada.jpg', focus:'50% 70%', year:'2023–2025',
-    tags:'Web-сервис · Desktop · Редактор',
-    short:'Редактор мнемосхем и мониторинг объектов. Упростила ключевые сценарии и снизила риск ошибок пользователей.',
-    meta:{'Роль':'UX/UI-дизайнер, единственный в команде','Период':'ноя 2023 — дек 2025','Платформа':'Desktop, web','Команда':'Agile, 2 команды разработки'},
-    task:['Пользователи настраивают мнемосхемы объектов и следят за их состоянием. Сценарии были перегружены лишними шагами, а интерфейсы трёх продуктов развивались разрозненно.','Нужно было упростить ключевые сценарии и сделать так, чтобы разработка собирала экраны быстрее и единообразно.'],
-    process:[['Интервью','Составила сценарии глубинных интервью и провела первые самостоятельно.'],['UX-тестирования','Инициировала первые в компании модерируемые тесты, а также коридорные и A/B-тесты.'],['Карта проблем','Собрала таблицу проблем, оценила критичность, сформулировала гипотезы вместе с менеджером.'],['Проектирование','Переработала сценарии мониторинга и настройки, спроектировала 100+ новых экранов.'],['Дизайн-система','Объединила три UI kit в систему с токенами цвета, типографики и отступов, подключила 2 команды разработки.']],
+    tags:'MVP · Web-сервис · Desktop',
+    short:'MVP SCADA-системы на основе старого продукта диспетчеризации. Превратила мнемосхему с данными в рабочий инструмент: редактор, мониторинг и аналитика в одном интерфейсе.',
+    meta:{'Роль':'UX/UI-дизайнер, единственный в команде','Тип':'MVP на базе старого продукта','Период':'ноя 2023 — дек 2025','Команда':'Agile, 2 команды разработки'},
+    task:['Старый продукт диспетчеризации умел одно: показать мнемосхему и данные с датчиков. Настройки схем, истории и аналитики в нём не было.',
+          'Задача: спроектировать MVP полноценной SCADA-системы, которую инженер и оператор освоят быстрее, чем решения конкурентов.'],
+    users:[
+      {who:'Инженер', role:'Собирает мнемосхемы и привязывает к ним сигналы',
+       pains:['Типовая схема собирается вручную, элемент за элементом','Свойства объекта и привязка сигнала разбросаны по разным окнам']},
+      {who:'Оператор', role:'Следит за объектами в смену и реагирует на события',
+       pains:['Аварийный статус легко пропустить среди штатных данных','Чтобы сравнить показания за период, данные выгружают и сводят вручную']}],
+    compare:{names:'Master SCADA · Alpha SCADA · Simple SCADA', rows:[
+      ['Перегруженный интерфейс','Десятки панелей и кнопок на одном экране.','Три зоны: объекты, холст, свойства. Остальное открывается по контексту.'],
+      ['Долгое обучение','Без курса и документации работу не начать.','Привычные паттерны графических редакторов: выделение, контекстное меню, горячие клавиши.'],
+      ['Устаревшие библиотеки','Элементы мнемосхем выглядят устаревшими, их приходится дорисовывать.','Обновлённая библиотека элементов в единой дизайн-системе.']]},
+    process:[
+      ['Аудит старого продукта','Разобрала, что уже работает в диспетчеризации и что переносить в MVP.'],
+      ['Анализ конкурентов','Сравнила сценарии, интерфейс и порог входа у трёх SCADA-систем.'],
+      ['Интервью','Глубинные интервью с инженерами и операторами. Собрала карту проблем с оценкой критичности.'],
+      ['Проектирование','Спроектировала 100+ экранов: редактор, мониторинг, журналы и графики.'],
+      ['UX-тестирования','Провела первые в компании модерируемые тесты, а также коридорные и A/B-тесты.'],
+      ['Дизайн-система','Токены цвета, типографики и отступов, документация для двух команд разработки.']],
     gallery:[
       {src:'sc-editor.jpg',w:'full',cap:'Редактор мнемосхем: дерево объектов слева, холст в центре, свойства и привязка сигнала справа. Статусы задвижек видны прямо на схеме.'},
       {src:'sc-table.jpg',cap:'Журнал замеров по скважинам: фильтры-чипы, выбор периода, экспорт и график изменений под таблицей.'},
@@ -455,6 +500,8 @@ function caseHTML(p){
   ${p.nda?'<p class="note">Проект под NDA: показаны обезличенные экраны. Подробности расскажу на встрече.</p>':''}
   <dl class="meta">${Object.entries(p.meta).map(([k,v])=>`<div><dt class="label">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
   ${row('Задача',`<div class="row__body">${p.task.map((t,j)=>`<p${j?' class="muted"':''}>${esc(t)}</p>`).join('')}</div>`)}
+  ${p.users ? row('Пользователи',`<div class="segs">${p.users.map(u=>`<div class="seg"><h3>${esc(u.who)}</h3><p class="seg__role">${esc(u.role)}</p><span class="label">Боли</span><ul>${u.pains.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('')}</div>`) : ''}
+  ${p.compare ? row('Конкуренты',`<div class="cmp"><p class="cmp__names">${esc(p.compare.names)}</p><div class="cmp__head" aria-hidden="true"><span class="label">Проблема у конкурентов</span><span class="label">Как решили мы</span></div>${p.compare.rows.map(r=>`<div class="cmp__row"><div><b>${esc(r[0])}</b><p>${esc(r[1])}</p></div><p class="cmp__ours"><span class="label">Решение</span>${esc(r[2])}</p></div>`).join('')}</div>`) : ''}
   ${row('Процесс',`<div class="steps">${p.process.map((s,j)=>`<div><span>${String(j+1).padStart(2,'0')}</span><p><b>${esc(s[0])}</b>${esc(s[1])}</p></div>`).join('')}</div>`)}
   <div class="wide"><span class="label">Решения</span><div class="gal">${p.gallery.map(g=>{
     const cls = g.w==='full' ? ' class="full"' : '';
@@ -503,7 +550,7 @@ const spy = new IntersectionObserver(es=>{
 
 /* элементы, которые мягко появляются при прокрутке */
 function markReveal(root){
-  root.querySelectorAll('.head,.work,.row,.job,.wide figure,.next,.meta,.case-cover').forEach(el=>el.classList.add('rv'));
+  root.querySelectorAll('.head,.work,.row,.job,.wide figure,.next,.meta,.case-cover,.seg,.cmp__row').forEach(el=>el.classList.add('rv'));
 }
 
 /* типографика: короткие слова (в, и, из, для…) и тире не остаются в конце строки */
