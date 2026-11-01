@@ -226,6 +226,69 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 .frame{height:clamp(420px,70vh,780px);overflow-y:auto;background:var(--tint);border:1px solid var(--line);overscroll-behavior:contain}
 .frame img{width:100%;height:auto}
 .hint{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+/* скрин с пояснением, слайдер до/после, лайтбокс */
+.shot{display:grid;gap:18px;align-items:start}
+@media (min-width:1024px){.shot{grid-template-columns:minmax(0,1.75fr) minmax(260px,1fr);gap:28px}}
+.media{position:relative;background:var(--tint);overflow:hidden}
+.media>img{width:100%;height:auto}
+.pill{position:absolute;top:12px;z-index:3;font:500 12px/1 var(--f-mono);letter-spacing:.04em;padding:7px 10px;background:var(--ink);color:var(--bg);pointer-events:none}
+.pill--l{left:12px}.pill--r{right:12px}
+.zoom{position:absolute;z-index:4;bottom:12px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:7px;font:500 12px/1 var(--f-mono);padding:7px 11px;background:var(--bg);color:var(--ink);border:1px solid var(--line);cursor:zoom-in;transition:border-color .2s}
+.zoom:hover{border-color:var(--ink)}
+.zoom svg{width:13px;height:13px}
+.media:not(.ba) .zoom{left:auto;right:12px;transform:none}
+.ba{--pos:50%;aspect-ratio:1600/937;max-width:100%;touch-action:pan-y;cursor:ew-resize;user-select:none;-webkit-user-select:none}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ba__before{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.ba__line{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:var(--bg);z-index:2;box-shadow:0 0 0 1px rgb(0 0 0 / .12)}
+.ba__knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;border:0;background:var(--bg);color:var(--ink);box-shadow:0 6px 20px rgb(0 0 0 / .22);display:grid;place-items:center;font:500 15px/1 var(--f-mono);cursor:ew-resize;transition:transform .2s var(--ease)}
+.ba__knob:hover{transform:translate(-50%,-50%) scale(1.08)}
+.ba.is-hint .ba__before{transition:clip-path .9s var(--ease)}.ba.is-hint .ba__line{transition:left .9s var(--ease)}
+.note-card{background:var(--tint);padding:clamp(20px,2.2vw,28px);display:grid;gap:14px;align-content:start}
+.note-card h3{font-family:var(--f-logo);font-weight:500;font-size:clamp(17px,1.4vw,20px);letter-spacing:-.02em}
+.chg{justify-self:start;display:inline-flex;align-items:center;gap:7px;font:500 12.5px/1 var(--f-mono);padding:8px 12px;background:var(--bg)}
+.chg svg{width:14px;height:14px}
+.note-card p{font-family:var(--f-text);font-size:15.5px;line-height:1.65}
+.note-card p.why{color:var(--muted)}
+.note-card p.why b{color:var(--ink);font-weight:500}
+.lb{position:fixed;inset:0;z-index:90;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;place-items:center;padding:calc(56px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:viewIn .3s var(--ease)}
+.lb__body{width:100%;display:grid;place-items:center;min-height:0}
+.lb__body>img{max-width:100%;max-height:calc(100svh - 110px);width:auto;height:auto}
+.lb .ba{width:min(100%, calc((100svh - 110px) * 1.7076))}
+.lb .zoom{display:none}
+.lb__close{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));height:38px;padding:0 14px;font:500 13px/1 var(--f-mono);background:var(--ink);color:var(--bg);border:0;cursor:pointer}
+
+/* приоритизация гипотез (ICE) */
+.ice__head{display:none}
+.ice__row{display:grid;grid-template-columns:repeat(3,auto) 1fr;gap:12px 18px;padding:20px 0;border-top:1px solid var(--line);align-items:baseline}
+.ice__row:first-of-type{border-top:0;padding-top:0}
+.ice__row p{grid-column:1/-1;font-family:var(--f-text);font-size:16px;line-height:1.6}
+.ice__row span{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ice__row span::before{content:attr(data-k) " "}
+.ice__score b{color:var(--ink);font-weight:700;font-size:16px}
+.ice__score i{display:block;height:3px;background:var(--line);margin-top:8px;position:relative;min-width:60px}
+.ice__score i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--w);background:var(--ink)}
+.ice__note{font-size:12.5px;color:var(--muted);margin-top:18px}
+@media (min-width:768px){
+  .ice__head,.ice__row{grid-template-columns:minmax(0,1fr) 64px 92px 52px 100px;gap:20px}
+  .ice__head{display:grid;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .ice__head span:not(:first-child){text-align:right}
+  .ice__row p{grid-column:auto}
+  .ice__row span{text-align:right;font-size:14.5px;color:var(--ink)}
+  .ice__row span::before{content:none}
+  .ice__score{text-align:right}
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chips span{font-size:13.5px;padding:9px 13px;background:var(--tint)}
+
+/* карточки метрик */
+.res{background:var(--tint);padding:22px;gap:10px!important;grid-template-rows:auto auto 1fr auto;align-content:stretch!important}
+.res strong{font-size:clamp(28px,2.6vw,40px)!important}
+.res__t{font-weight:500;font-size:14.5px}
+.res span{font-family:var(--f-text);font-size:14.5px!important;line-height:1.6}
+.st{justify-self:start;align-self:end;margin-top:6px;display:inline-flex;align-items:center;gap:7px;font:500 12px/1 var(--f-mono);font-style:normal;padding:7px 10px;background:var(--bg)}
+.st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--muted)}
+.st--ok::before{background:var(--ok)}
 .results{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px 24px}
 .results div{display:grid;gap:8px;align-content:start}
 .results strong{font-family:var(--f-logo);font-weight:500;font-size:clamp(24px,2.4vw,34px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
@@ -440,9 +503,21 @@ const PROJECTS = [
       ['UX-тестирования','Провела первые в компании модерируемые тесты, а также коридорные и A/B-тесты.'],
       ['Дизайн-система','Токены цвета, типографики и отступов, документация для двух команд разработки.']],
     gallery:[
-      {src:'sc-editor.jpg',w:'full',cap:'Редактор мнемосхем: дерево объектов слева, холст в центре, свойства и привязка сигнала справа. Статусы задвижек видны прямо на схеме.'},
-      {src:'sc-table.jpg',cap:'Журнал замеров по скважинам: фильтры-чипы, выбор периода, экспорт и график изменений под таблицей.'},
-      {src:'sc-chart.jpg',cap:'Сравнение показаний виртуального расходомера и датчика потока на одном графике с общим курсором.'}],
+      {src:'sc-editor.jpg', title:'Редактор мнемосхем',
+       change:'Редактор собран в три зоны: дерево объектов, холст и панель свойств. Привязка сигнала живёт рядом со схемой, редкие действия ушли в контекстное меню с горячими клавишами.',
+       why:'Инженер собирал схему, переключаясь между окнами, а у конкурентов на одном экране десятки панелей. Ключевые действия должны быть под рукой, остальное открываться по контексту.'},
+      {src:'sc-table.jpg', title:'Журнал замеров',
+       change:'Таблица замеров с фильтрами-чипами, выбором периода и экспортом. Под таблицей график изменений за тот же период.',
+       why:'Чтобы сравнить показания, оператор выгружал данные и сводил их вручную. Теперь история и динамика видны на одном экране.'},
+      {src:'sc-chart.jpg', title:'График скважины',
+       change:'Показания виртуального расходомера и датчика потока на одном графике с общим курсором и значениями в легенде.',
+       why:'Расхождение между двумя источниками важно заметить сразу, а не сверять цифры в двух окнах.'}],
+    ice:[
+      ['Если выделить аварийные статусы цветом и плашками прямо на схеме, оператор быстрее заметит отклонение.',9,8,8],
+      ['Если вынести привязку сигнала в панель свойств рядом с холстом, инженер реже ошибётся при привязке.',7,7,8],
+      ['Если собрать редактор в три зоны (объекты, холст, свойства), инженер быстрее соберёт типовую мнемосхему.',8,8,6],
+      ['Если повторить паттерны графических редакторов (контекстное меню, горячие клавиши), новый инженер начнёт работать без обучения.',6,7,9],
+      ['Если добавить журнал замеров с фильтрами и графиком за период, оператору не придётся выгружать данные вручную.',7,7,5]],
     results:[['~20%','быстрее отрисовка типовых мнемосхем'],['3.2 → 4.5','CES ключевых сценариев из 5'],['−30%','времени на проектирование'],['−25%','вопросов от разработчиков']] },
   { id:'landing', title:'OZNA Digital Solutions', img:'landing.jpg', focus:'50% 40%', year:'2024',
     tags:'Лендинг · Desktop · Mobile',
@@ -459,13 +534,35 @@ const PROJECTS = [
     tags:'Планшет · Touch · Полевые условия',
     short:'Интерфейс расходомера для планшета. Повысила читаемость данных и сделала управление удобным даже в перчатках.',
     meta:{'Роль':'UX/UI-дизайнер','Компания':'ОЗНА','Платформа':'Планшет, Linux','Условия':'Работа в перчатках на улице'},
-    task:['Оператор пользуется планшетом на улице и в перчатках. Мелкие элементы и плотные экраны приводили к ошибочным нажатиям и плохой читаемости.','Задача: адаптировать продукт под планшет и спроектировать новые экраны внутри него.'],
-    process:[['Анализ условий','Изучила, где и как используется устройство и какие данные нужны в первую очередь.'],['Тест «до»','Зафиксировала исходное количество ошибочных нажатий.'],['Редизайн','Увеличила touch-зоны и кнопки, перестроила иерархию данных.'],['Тест «после»','Повторила тестирование и сравнила с исходными результатами.']],
+    task:['Оператор работает с планшетом на улице и в перчатках. Мелкие кнопки, меню из одних иконок и технические имена параметров (t_lc, kv_sg, wcfg) приводили к промахам и мешали быстро прочитать показания.',
+          'Задача: адаптировать продукт под планшет в полевых условиях и спроектировать новые экраны внутри него.'],
+    process:[
+      ['Анализ условий','Изучила, где и как используется устройство и какие данные нужны в первую очередь.'],
+      ['Аудит экранов','Собрала проблемы: мелкие touch-зоны, меню без подписей, технические имена вместо понятных названий, одинаковый цвет для нормы и отклонения.'],
+      ['Тест «до»','Зафиксировала исходное количество ошибочных нажатий.'],
+      ['Редизайн','Увеличила touch-зоны и кнопки, подписала меню, заменила теги понятными названиями, перестроила иерархию данных.'],
+      ['Тест «после»','Повторила тестирование и сравнила с исходными результатами.']],
+    ice:[
+      ['Если увеличить кнопки и пункты меню под работу в перчатках, ошибочных нажатий станет меньше.',10,9,8],
+      ['Если заменить технические имена (t_lc, kv_sg) понятными названиями с единицами, оператор прочитает показание без справочника.',9,8,7],
+      ['Если подписать пункты меню текстом, а не только иконками, оператор быстрее найдёт нужный раздел.',7,8,9],
+      ['Если сделать значения крупнее и выделить отклонения цветом, их будет видно на улице при ярком свете.',8,8,7],
+      ['Если показать диагностику списком проверок «да/нет», оператор сразу увидит, что именно неисправно.',8,7,6]],
     gallery:[
-      {src:'ms-scheme.jpg',w:'full',cap:'Мнемосхема замерной установки: крупные значения, цветовые статусы и итоговые показатели внизу экрана.'},
-      {src:'ms-switch.jpg',cap:'Диагностика переключателя скважин: каждая проверка в отдельной строке, неисправность выделена цветом.'},
-      {src:'ms-measure.jpg',cap:'Таблица измерений: фильтры сверху, крупные строки и пункты меню, удобные для нажатия в перчатках.'}],
-    results:[['Крупнее','touch-зоны и кнопки для работы в перчатках'],['Меньше','ошибочных нажатий по тестам до и после']] },
+      {src:'ms-scheme.jpg', before:'ms-scheme-before.jpg', title:'Мнемосхема',
+       change:'Технические имена (t_lc, pcoll, AIValueBox) заменены понятными подписями с единицами. Значения крупнее, отклонения выделены красным, норма зелёным.',
+       why:'Оператор не обязан помнить имена тегов. В поле на схему есть секунды, а прочерки и одинаковый цвет не показывают, где проблема.'},
+      {src:'ms-switch.jpg', before:'ms-switch-before.jpg', title:'Переключатель скважин',
+       change:'Сырые параметры конфигурации (wcfg, kv_sg) превратились в диагностику: каждая проверка отдельной строкой с ответом «да/нет», неисправность выделена цветом.',
+       why:'Список переменных без расшифровки не отвечает на главный вопрос оператора: исправен ли переключатель и что сломалось.'},
+      {src:'ms-measure.jpg', before:'ms-measure-before.jpg', title:'Измерение',
+       change:'Вместо журнала с пустыми колонками таблица показателей по фазам: жидкость, нефть, вода, газ с единицами. Меню стало крупнее и получило подписи.',
+       why:'Иконки без подписей приходилось запоминать, а в перчатках по мелким пунктам легко промахнуться.'}],
+    results:[
+      {v:'↓', t:'Misclick rate', d:'Доля ошибочных нажатий в перчатках. Крупные кнопки и пункты меню, сравнили на тестах до и после.'},
+      {v:'↑', t:'Читаемость показаний', d:'Понятные названия вместо тегов, крупные значения и цветовые статусы.'},
+      {v:'↓', t:'Time on task', d:'Время, за которое оператор находит нужный показатель: меню подписано, не нужно вспоминать, что за иконкой или тегом.'},
+      {v:'↑', t:'Task success rate', d:'Доля задач, которые оператор выполняет сам, без справочника по тегам и звонка инженеру.'}] },
   { id:'essence', title:'Essence', img:'essence.jpg', focus:'50% 50%', year:'2023',
     tags:'E-commerce · Mobile · Fashion',
     short:'Мобильное приложение магазина одежды. Полный цикл за 2,5 недели: от исследований до интерактивного прототипа.',
@@ -490,6 +587,27 @@ document.getElementById('works').innerHTML = PROJECTS.map((p,i)=>`
       <span class="tg">${esc(p.tags)}</span><p>${esc(p.short)}</p></div>
   </a>`).join('');
 
+const ICON_CHG = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13.5 6.5A5.5 5.5 0 0 0 3.2 4.6M2.5 9.5a5.5 5.5 0 0 0 10.3 1.9M3 2v3h3M13 14v-3h-3"/></svg>';
+const ICON_ZOOM = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14M7 5v4M5 7h4"/></svg>';
+/* картинка или слайдер «до/после» с кнопкой «Приблизить» */
+function mediaHTML(g){
+  const zoom = `<button class="zoom" type="button" data-zoom>${ICON_ZOOM}Приблизить</button>`;
+  if(g.before) return `<div class="media ba" data-ba>
+      <img class="ba__after" src="${g.src}" alt="${esc(g.title||'')}, после" loading="lazy">
+      <img class="ba__before" src="${g.before}" alt="${esc(g.title||'')}, до" loading="lazy">
+      <span class="pill pill--l">До</span><span class="pill pill--r">После</span>${zoom}
+      <div class="ba__line"><button class="ba__knob" type="button" role="slider" aria-label="Сравнить до и после" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">‹›</button></div>
+    </div>`;
+  return `<div class="media"><img src="${g.src}" alt="${esc(g.title||g.cap||'')}" loading="lazy">${zoom}</div>`;
+}
+/* ICE: оценки 1–10, итог = I × C × E, сортировка по убыванию */
+function iceHTML(list){
+  const rows = list.map(h=>({t:h[0],i:h[1],c:h[2],e:h[3],s:h[1]*h[2]*h[3]})).sort((a,b)=>b.s-a.s);
+  return `<div class="ice"><div class="ice__head label"><span>Гипотеза</span><span>Impact</span><span>Confidence</span><span>Ease</span><span>ICE</span></div>
+    ${rows.map(r=>`<div class="ice__row"><p>${esc(r.t)}</p><span data-k="Impact">${r.i}</span><span data-k="Confidence">${r.c}</span><span data-k="Ease">${r.e}</span><span class="ice__score" data-k="ICE"><b>${r.s}</b></span></div>`).join('')}
+    </div><p class="ice__note">ICE = Impact × Confidence × Ease, каждый параметр от 1 до 10.</p>`;
+}
+
 function caseHTML(p){
   const i = PROJECTS.indexOf(p), n = PROJECTS[(i+1)%PROJECTS.length];
   const row = (l,b)=>`<div class="row"><span class="label">${l}</span>${b}</div>`;
@@ -501,15 +619,19 @@ function caseHTML(p){
   <dl class="meta">${Object.entries(p.meta).map(([k,v])=>`<div><dt class="label">${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
   ${row('Задача',`<div class="row__body">${p.task.map((t,j)=>`<p${j?' class="muted"':''}>${esc(t)}</p>`).join('')}</div>`)}
   ${p.users ? row('Пользователи',`<div class="segs">${p.users.map(u=>`<div class="seg"><h3>${esc(u.who)}</h3><p class="seg__role">${esc(u.role)}</p><span class="label">Боли</span><ul>${u.pains.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('')}</div>`) : ''}
-  ${p.compare ? row('Конкуренты',`<div class="cmp"><p class="cmp__names">${esc(p.compare.names)}</p><div class="cmp__head" aria-hidden="true"><span class="label">Проблема у конкурентов</span><span class="label">Как решили мы</span></div>${p.compare.rows.map(r=>`<div class="cmp__row"><div><b>${esc(r[0])}</b><p>${esc(r[1])}</p></div><p class="cmp__ours"><span class="label">Решение</span>${esc(r[2])}</p></div>`).join('')}</div>`) : ''}
+  ${p.compare ? row('Конкуренты',`<div class="cmp"><div class="chips">${p.compare.names.split(' · ').map(n=>`<span>${esc(n)}</span>`).join('')}</div><div class="cmp__head" aria-hidden="true"><span class="label">Проблема у конкурентов</span><span class="label">Как решили мы</span></div>${p.compare.rows.map(r=>`<div class="cmp__row"><div><b>${esc(r[0])}</b><p>${esc(r[1])}</p></div><p class="cmp__ours"><span class="label">Решение</span>${esc(r[2])}</p></div>`).join('')}</div>`) : ''}
   ${row('Процесс',`<div class="steps">${p.process.map((s,j)=>`<div><span>${String(j+1).padStart(2,'0')}</span><p><b>${esc(s[0])}</b>${esc(s[1])}</p></div>`).join('')}</div>`)}
+  ${p.ice ? row('Гипотезы', iceHTML(p.ice)) : ''}
   <div class="wide"><span class="label">Решения</span><div class="gal">${p.gallery.map(g=>{
     const cls = g.w==='full' ? ' class="full"' : '';
+    if(g.change) return `<figure class="full shot">${mediaHTML(g)}<div class="note-card">${g.title?`<h3>${esc(g.title)}</h3>`:''}<span class="chg">${ICON_CHG}Изменили</span><p>${esc(g.change)}</p><p class="why"><b>Почему:</b> ${esc(g.why)}</p></div></figure>`;
     if(g.t==='phones') return `<figure${cls}><div class="phones">${g.src.map(s=>`<img src="${s}" alt="" loading="lazy">`).join('')}</div><figcaption>${esc(g.cap)}</figcaption></figure>`;
     if(g.t==='scroll') return `<figure${cls}><div class="frame" tabindex="0" aria-label="${esc(g.cap)}"><img src="${g.src}" alt="${esc(g.cap)}" loading="lazy"></div><figcaption>${esc(g.cap)} <span class="hint">· прокрутите</span></figcaption></figure>`;
     return `<figure${cls}><div class="g-img"><img src="${g.src}" alt="${esc(g.cap)}" loading="lazy"></div><figcaption>${esc(g.cap)}</figcaption></figure>`;
   }).join('')}</div></div>
-  ${row('Результаты',`<div class="results">${p.results.map(r=>`<div><strong>${esc(r[0])}</strong><span>${esc(r[1])}</span></div>`).join('')}</div>`)}
+  ${row('Результаты',`<div class="results">${p.results.map(r=> Array.isArray(r)
+      ? `<div><strong>${esc(r[0])}</strong><span>${esc(r[1])}</span></div>`
+      : `<div class="res"><strong>${esc(r.v)}</strong><b class="res__t">${esc(r.t)}</b><span>${esc(r.d)}</span>${r.s?`<em class="st st--${r.s}">${r.s==='ok'?'Подтверждено тестами':'Ожидаемый эффект'}</em>`:''}</div>`).join('')}</div>`)}
   <a class="next" href="#${n.id}"><span class="label">Следующий проект</span><h2>${esc(n.title)} →</h2></a>`;
 }
 
@@ -550,7 +672,7 @@ const spy = new IntersectionObserver(es=>{
 
 /* элементы, которые мягко появляются при прокрутке */
 function markReveal(root){
-  root.querySelectorAll('.head,.work,.row,.job,.wide figure,.next,.meta,.case-cover,.seg,.cmp__row').forEach(el=>el.classList.add('rv'));
+  root.querySelectorAll('.head,.work,.row,.job,.wide figure,.next,.meta,.case-cover,.seg,.cmp__row,.shot,.ice__row,.res').forEach(el=>el.classList.add('rv'));
 }
 
 /* типографика: короткие слова (в, и, из, для…) и тире не остаются в конце строки */
@@ -582,6 +704,64 @@ document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',(
   const fail = ()=>{ const r=document.createRange(); r.selectNodeContents(b); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('Почта выделена — скопируйте её'); };
   try{ navigator.clipboard.writeText(mail).then(()=>toast('Почта скопирована'), fail); }catch(_){ fail(); }
 }));
+
+/* слайдер «до/после»: перетаскивание, клик, стрелки */
+function setPos(ba, x){
+  const r = ba.getBoundingClientRect();
+  const v = Math.max(0, Math.min(100, (x - r.left) / r.width * 100));
+  ba.style.setProperty('--pos', v + '%');
+  const k = ba.querySelector('.ba__knob'); if(k) k.setAttribute('aria-valuenow', Math.round(v));
+}
+document.addEventListener('pointerdown', e=>{
+  const ba = e.target.closest('[data-ba]');
+  if(!ba || e.target.closest('.zoom')) return;
+  ba.classList.remove('is-hint');
+  setPos(ba, e.clientX);
+  const move = ev=>setPos(ba, ev.clientX);
+  const up = ()=>{ window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up); };
+  window.addEventListener('pointermove', move); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+});
+document.addEventListener('keydown', e=>{
+  const k = e.target.closest && e.target.closest('.ba__knob');
+  if(!k || !/Arrow(Left|Right)|Home|End/.test(e.key)) return;
+  e.preventDefault();
+  const ba = k.closest('[data-ba]');
+  let v = parseFloat(getComputedStyle(ba).getPropertyValue('--pos')) || 50;
+  v = e.key==='Home' ? 0 : e.key==='End' ? 100 : v + (e.key==='ArrowLeft' ? -5 : 5);
+  v = Math.max(0, Math.min(100, v));
+  ba.style.setProperty('--pos', v + '%'); k.setAttribute('aria-valuenow', Math.round(v));
+});
+/* подсказка: при первом показе линия слегка сдвигается, чтобы было понятно, что её можно тянуть */
+const hintIO = new IntersectionObserver(es=>es.forEach(en=>{
+  if(!en.isIntersecting || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const ba = en.target; hintIO.unobserve(ba); ba.classList.add('is-hint');
+  setTimeout(()=>ba.style.setProperty('--pos','32%'), 250);
+  setTimeout(()=>ba.style.setProperty('--pos','50%'), 1150);
+  setTimeout(()=>ba.classList.remove('is-hint'), 2100);
+}),{threshold:.6});
+new MutationObserver(()=>document.querySelectorAll('#v-case [data-ba]:not([data-h])').forEach(b=>{ b.dataset.h=1; hintIO.observe(b); }))
+  .observe(document.getElementById('v-case'),{childList:true});
+
+/* «Приблизить»: экран целиком поверх страницы */
+let lb = null;
+function closeLb(){ if(!lb) return; lb.remove(); lb = null; document.documentElement.style.overflow=''; }
+document.addEventListener('click', e=>{
+  const z = e.target.closest('[data-zoom]');
+  if(z){
+    const media = z.closest('.media').cloneNode(true);
+    if(media.matches('[data-ba]')) media.removeAttribute('data-h');
+    lb = document.createElement('div'); lb.className='lb'; lb.setAttribute('role','dialog'); lb.setAttribute('aria-modal','true');
+    lb.innerHTML = '<button class="lb__close" type="button">Закрыть ×</button><div class="lb__body"></div>';
+    const body = lb.querySelector('.lb__body');
+    body.append(media.matches('[data-ba]') ? media : media.querySelector('img'));
+    document.body.append(lb); document.documentElement.style.overflow='hidden';
+    lb.querySelector('.lb__close').focus();
+    return;
+  }
+  if(lb && (e.target.closest('.lb__close') || e.target===lb || e.target.classList.contains('lb__body'))) closeLb();
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLb(); });
+window.addEventListener('hashchange', closeLb);
 
 /* местное время в шапке — удобно рекрутеру из другого часового пояса */
 const clock = document.getElementById('clock');
