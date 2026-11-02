@@ -117,6 +117,15 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 .lead{font-family:var(--f-text);font-size:clamp(17px,1.4vw,21px);line-height:1.55;max-width:52ch}
 
 /* проекты: широкий · половина · половина · широкий */
+.tabs{display:flex;gap:clamp(18px,3vw,36px);border-bottom:1px solid var(--line);margin-bottom:clamp(32px,4vw,52px);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{font:400 15px/1 var(--f-mono);color:var(--muted);background:none;border:0;padding:0 0 14px;cursor:pointer;white-space:nowrap;position:relative;transition:color .2s}
+.tabs button::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.tabs button:hover{color:var(--ink)}
+.tabs button[aria-selected="true"]{color:var(--ink)}
+.tabs button[aria-selected="true"]::after{transform:none}
+.tabs sup{font-size:11px;color:var(--muted);margin-left:2px}
+.works.swap{animation:viewIn .45s var(--ease)}
 .works{display:grid;gap:clamp(48px,5.5vw,80px) clamp(16px,2vw,28px)}
 @media (min-width:768px){.works{grid-template-columns:repeat(2,minmax(0,1fr))}.work--wide{grid-column:1/-1}}
 .work{display:grid;gap:18px;align-content:start}
@@ -307,6 +316,9 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 .ghost{display:inline-flex;align-items:center;height:44px;padding:0 18px;border:1px solid var(--line);font:400 14px/1 var(--f-mono);color:var(--ink);background:none;cursor:pointer;overflow-wrap:anywhere;transition:border-color .2s}
 .ghost:hover{border-color:var(--ink)}
 .foot{padding-top:32px;font-size:13px;color:var(--muted)}
+.totop{position:fixed;z-index:45;right:max(16px,calc(env(safe-area-inset-right,0px) + 16px));bottom:calc(var(--dock) + 16px + env(safe-area-inset-bottom,0px));width:46px;height:46px;display:grid;place-items:center;background:var(--ink);color:var(--bg);border:0;cursor:pointer;animation:viewIn .35s var(--ease);transition:transform .25s var(--ease)}
+.totop:hover{transform:translateY(-3px)}
+.totop svg{width:18px;height:18px}
 .toast{position:fixed;left:50%;bottom:calc(var(--dock) + 16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;font-size:13px;z-index:80;animation:viewIn .3s var(--ease)}
 
 /* ── анимации: короткая загрузка интро и мягкое появление при прокрутке ── */
@@ -365,7 +377,11 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 
     <section class="sec" id="projects">
       <div class="head rv"><span class="label">Проекты</span><h2>избранные кейсы</h2></div>
-      <div class="works" id="works"></div>
+      <div class="tabs" role="tablist" aria-label="Тип проектов">
+        <button type="button" role="tab" data-g="main">Основные проекты <sup></sup></button>
+        <button type="button" role="tab" data-g="other">Хакатоны и прочее <sup></sup></button>
+      </div>
+      <div class="works" id="works" role="tabpanel"></div>
     </section>
 
     <section class="sec" id="about">
@@ -374,13 +390,6 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
         <div class="row__body">
           <p>Мне интересно не просто рисовать экраны, а разбираться в логике продукта и поведении пользователей, чтобы интерфейс действительно облегчал людям их задачи.</p>
           <p class="muted">Работала с мобильным e-commerce, лендингами, веб-сервисами и сложными системами с большим количеством сценариев. Сейчас выстраиваю работу с ИИ, чтобы ускорять рутину и больше времени отдавать исследованиям и решениям.</p>
-        </div></div>
-      <div class="row"><span class="label">В цифрах</span>
-        <div class="metrics">
-          <div><strong>3+ года</strong><span>в продуктовом и UX/UI-дизайне</span></div>
-          <div><strong>100+</strong><span>спроектированных экранов</span></div>
-          <div><strong>3.2 → 4.5</strong><span>индекс удобства (CES) ключевых сценариев</span></div>
-          <div><strong>−30%</strong><span>времени на проектирование после внедрения дизайн-системы</span></div>
         </div></div>
       <div class="row"><span class="label">Как работаю</span>
         <div class="steps">
@@ -460,6 +469,7 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
   <footer class="foot">© 2026 Алина Галиева</footer>
 </main>
 
+<button class="totop" id="totop" type="button" aria-label="Наверх" hidden><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></button>
 <div class="dock" aria-label="Контакты">
   <div class="wrap">
     <button type="button" data-copy title="Скопировать почту">karpomiko3@gmail.com</button>
@@ -573,19 +583,63 @@ const PROJECTS = [
       {src:'es-banner.jpg',w:'full',cap:'Ключевые экраны приложения.'},
       {t:'phones',w:'full',src:['es-home.jpg','es-cats.jpg','es-looks.jpg'],cap:'Главная, категории и подборки образов: вход в каталог через готовые стили, а не только через фильтры.'},
       {t:'phones',w:'full',src:['es-look.jpg','es-cart.jpg','es-profile.jpg'],cap:'Образ целиком, корзина с выбором позиций и профиль с заказами и трек-номером.'}],
-    results:[['2,5 недели','от исследований до передачи в разработку'],['UI kit','и интерактивный прототип в ProtoPie']] }
+    results:[['2,5 недели','от исследований до передачи в разработку'],['UI kit','и интерактивный прототип в ProtoPie']] },
+  { id:'gpt-hub', group:'other', title:'GPT Hub · Оркестратор ИИ', img:'hk-cover.jpg', focus:'60% 30%', year:'2026',
+    tags:'Хакатон · AI-ассистент · Web',
+    short:'Интерфейс AI-оркестратора для MTS True Tech Hack 2026: один чат для текста, картинок, аудио и кода, а подходящую модель система выбирает сама. Два дня, дизайнер и junior-разработчик, 28 место из 200+ участников.',
+    meta:{'Хакатон':'MTS True Tech Hack 2026','Роль':'Дизайнер','Команда':'Дизайнер + junior-разработчик','Срок':'2 дня на всё'},
+    task:['Задача трека: собрать оркестратор ИИ. Пользователь пишет запрос, прикладывает файл или говорит голосом, а система сама направляет его в подходящую модель: текстовую, генерации изображений, распознавания речи или модель для кода.',
+          'Ограничения: два дня на всё, один junior-разработчик на фронтенде, форк OpenWebUI и обязательный Svelte по условиям хакатона. Поэтому интерфейс я специально делала простым для разработки: привычные паттерны AI-чатов и готовые компоненты Flowbite, у которого есть версия под Svelte.'],
+    process:[
+      ['Карта интерфейса','Связала зоны интерфейса с архитектурой: что видит пользователь на каждом этапе обработки запроса.'],
+      ['Простые паттерны','Опиралась на знакомую раскладку AI-чатов: разработчик собирает её за два дня, пользователю не нужно учиться.'],
+      ['Ключевые решения','Карточки вложений, переключение моделей и Auto-режим, который выбирает модель по контексту запроса.'],
+      ['Состояния','Голосовой ввод, генерация изображения, код, поиск, контекстное меню чата, папки с системным промптом.']],
+    gallery:[
+      {src:'hk-scheme.jpg', title:'Карта интерфейса и архитектуры', chip:'Решение',
+       change:'Разложила интерфейс на зоны (сайдбар, шапка чата, лента, поле ввода) и связала их со слоями оркестратора: препроцессинг, память, роутер, сборка ответа.',
+       why:'Junior-разработчику было видно, какой элемент за что отвечает и какие у него состояния. Меньше вопросов по ходу, а за два дня это решает.'},
+      {src:'hk-models.jpg', title:'Переключение моделей и Auto-режим', chip:'Решение',
+       change:'Выбор модели в шапке чата: поиск и подпись задачи у каждой модели. Первым стоит Auto: GPT Hub сам определяет модель по контексту запроса.',
+       why:'Пользователь не обязан знать, чем Qwen отличается от DeepSeek. Достаточно написать запрос, а ручной выбор остаётся для тех, кто хочет управлять сам.'},
+      {src:'hk-attach.jpg', title:'Карточки вложений', chip:'Решение',
+       change:'Вложения стоят карточками над полем ввода: превью картинки, имя файла и тип (PDF, MP3). Любое можно убрать до отправки.',
+       why:'В одном запросе бывает фото, документ и аудио. По карточкам сразу видно, что уйдёт модели, а роутер по типу вложения понимает, куда направить запрос.'},
+      {src:'hk-image.jpg', cap:'Генерация изображения: картинка в ленте с действиями (скачать, повторить) и подсказками для следующего шага.'},
+      {src:'hk-code.jpg', cap:'Ответ с кодом от модели для сложных рассуждений: подсветка, номера строк, сворачивание блоков.'},
+      {src:'hk-folder.jpg', cap:'Папка с системным промптом: общий контекст для всех чатов внутри неё.'},
+      {src:'hk-menu.jpg', cap:'Контекстное меню чата: поделиться, переименовать, клонировать, удалить.'}],
+    results:[['28 место','из 200+ участников'],['2 дня','от идеи до рабочего прототипа'],['2 человека','дизайнер и junior-разработчик']] }
 ];
 
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const nda = p => p.nda ? '<span class="nda">NDA</span>' : '';
 
 /* сетка: первый из каждых трёх проектов широкий, между ними пары */
-document.getElementById('works').innerHTML = PROJECTS.map((p,i)=>`
+/* вкладки: основные проекты / хакатоны и прочее (поле group:'other') */
+let activeGroup = 'main';
+const groupOf = p => p.group || 'main';
+function renderWorks(animate){
+  const el = document.getElementById('works');
+  const list = PROJECTS.filter(p=>groupOf(p)===activeGroup);
+  el.innerHTML = list.map((p,i)=>`
   <a class="work${i%3===0?' work--wide':''}" href="#${p.id}">
     <div class="work__img"><img src="${p.img}" alt="${esc(p.title)}" loading="lazy" style="object-position:${p.focus}"><span class="work__num">${String(i+1).padStart(2,'0')} / ${esc(p.year)}</span></div>
     <div class="work__cap"><h2>${esc(p.title)}${nda(p)}<span class="arr" aria-hidden="true">→</span></h2>
       <span class="tg">${esc(p.tags)}</span><p>${esc(p.short)}</p></div>
   </a>`).join('');
+  document.querySelectorAll('.tabs [data-g]').forEach(b=>{
+    b.setAttribute('aria-selected', b.dataset.g===activeGroup);
+    b.querySelector('sup').textContent = PROJECTS.filter(p=>groupOf(p)===b.dataset.g).length;
+  });
+  if(renderWorks.ready){ markReveal(el); typograph(el); }
+  if(animate){ el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }
+}
+renderWorks();
+document.querySelector('.tabs').addEventListener('click', e=>{
+  const b = e.target.closest('[data-g]'); if(!b || b.dataset.g===activeGroup) return;
+  activeGroup = b.dataset.g; renderWorks(true);
+});
 
 const ICON_CHG = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13.5 6.5A5.5 5.5 0 0 0 3.2 4.6M2.5 9.5a5.5 5.5 0 0 0 10.3 1.9M3 2v3h3M13 14v-3h-3"/></svg>';
 const ICON_ZOOM = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14M7 5v4M5 7h4"/></svg>';
@@ -624,10 +678,10 @@ function caseHTML(p){
   ${p.ice ? row('Гипотезы', iceHTML(p.ice)) : ''}
   <div class="wide"><span class="label">Решения</span><div class="gal">${p.gallery.map(g=>{
     const cls = g.w==='full' ? ' class="full"' : '';
-    if(g.change) return `<figure class="full shot">${mediaHTML(g)}<div class="note-card">${g.title?`<h3>${esc(g.title)}</h3>`:''}<span class="chg">${ICON_CHG}Изменили</span><p>${esc(g.change)}</p><p class="why"><b>Почему:</b> ${esc(g.why)}</p></div></figure>`;
+    if(g.change) return `<figure class="full shot">${mediaHTML(g)}<div class="note-card">${g.title?`<h3>${esc(g.title)}</h3>`:''}<span class="chg">${ICON_CHG}${esc(g.chip||'Изменили')}</span><p>${esc(g.change)}</p><p class="why"><b>Почему:</b> ${esc(g.why)}</p></div></figure>`;
     if(g.t==='phones') return `<figure${cls}><div class="phones">${g.src.map(s=>`<img src="${s}" alt="" loading="lazy">`).join('')}</div><figcaption>${esc(g.cap)}</figcaption></figure>`;
     if(g.t==='scroll') return `<figure${cls}><div class="frame" tabindex="0" aria-label="${esc(g.cap)}"><img src="${g.src}" alt="${esc(g.cap)}" loading="lazy"></div><figcaption>${esc(g.cap)} <span class="hint">· прокрутите</span></figcaption></figure>`;
-    return `<figure${cls}><div class="g-img"><img src="${g.src}" alt="${esc(g.cap)}" loading="lazy"></div><figcaption>${esc(g.cap)}</figcaption></figure>`;
+    return `<figure${cls}>${mediaHTML(g)}<figcaption>${esc(g.cap)}</figcaption></figure>`;
   }).join('')}</div></div>
   ${row('Результаты',`<div class="results">${p.results.map(r=> Array.isArray(r)
       ? `<div><strong>${esc(r[0])}</strong><span>${esc(r[1])}</span></div>`
@@ -649,11 +703,14 @@ function route(){
     setCurrent('projects');
     window.scrollTo({top:0, behavior:'instant'});
     lastCase = p.id;
+    if(groupOf(p)!==activeGroup){ activeGroup = groupOf(p); renderWorks(); }
     return;
   }
   if(!caseView.hidden){
     caseView.hidden = true; home.hidden = false;
     document.title = 'Алина Галиева';
+    // после кейса всегда показываем основные проекты: они релевантнее для HR
+    if(activeGroup!=='main'){ activeGroup = 'main'; renderWorks(); }
     // назад к карточке того кейса, из которого вернулись; иначе — к нужному разделу
     const card = id==='projects' && lastCase && document.querySelector(`.work[href="#${lastCase}"]`);
     const target = card || (id && document.getElementById(id));
@@ -689,6 +746,7 @@ function typograph(root){
 }
 typograph(document.body);
 markReveal(home); document.getElementById('contacts').classList.add('rv');
+renderWorks.ready = true;
 window.addEventListener('hashchange', route);
 route();
 
@@ -762,6 +820,20 @@ document.addEventListener('click', e=>{
 });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLb(); });
 window.addEventListener('hashchange', closeLb);
+
+/* «Наверх»: появляется, когда до конца страницы остаётся меньше полутора экранов */
+const totop = document.getElementById('totop');
+function checkTop(){
+  const left = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
+  totop.hidden = !(window.scrollY > window.innerHeight && left < window.innerHeight * 1.5);
+}
+window.addEventListener('scroll', checkTop, {passive:true});
+window.addEventListener('resize', checkTop);
+window.addEventListener('hashchange', ()=>requestAnimationFrame(checkTop));
+totop.addEventListener('click', ()=>{
+  const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  window.scrollTo({top:0, behavior: reduce ? 'instant' : 'smooth'});
+});
 
 /* местное время в шапке — удобно рекрутеру из другого часового пояса */
 const clock = document.getElementById('clock');
