@@ -351,7 +351,6 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
     <a class="logo" href="#top" aria-label="Алина Галиева, наверх">galieva</a>
     <nav class="nav" aria-label="Разделы">
       <a href="#projects" data-s="projects">Проекты</a>
-      <a href="#about" data-s="about">Обо мне</a>
       <a href="#experience" data-s="experience">Опыт</a>
     </nav>
     <div class="top__right">
@@ -384,36 +383,6 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
       <div class="works" id="works" role="tabpanel"></div>
     </section>
 
-    <section class="sec" id="about">
-      <div class="head"><span class="label">Обо мне</span><h2>делаю интерфейсы понятнее, процессы быстрее, решения системнее</h2></div>
-      <div class="row"><span class="label">Коротко</span>
-        <div class="row__body">
-          <p>Мне интересно не просто рисовать экраны, а разбираться в логике продукта и поведении пользователей, чтобы интерфейс действительно облегчал людям их задачи.</p>
-          <p class="muted">Работала с мобильным e-commerce, лендингами, веб-сервисами и сложными системами с большим количеством сценариев. Сейчас выстраиваю работу с ИИ, чтобы ускорять рутину и больше времени отдавать исследованиям и решениям.</p>
-        </div></div>
-      <div class="row"><span class="label">Как работаю</span>
-        <div class="steps">
-          <div><span>01</span><p><b>Исследую</b>Интервью, анализ конкурентов, CJM, уточнение требований.</p></div>
-          <div><span>02</span><p><b>Проектирую</b>User flow и прототипы, сокращаю лишние шаги в сценариях.</p></div>
-          <div><span>03</span><p><b>Проверяю</b>Модерируемые и коридорные UX-тесты, A/B-тесты.</p></div>
-          <div><span>04</span><p><b>Систематизирую</b>UI kit и дизайн-система с токенами и документацией.</p></div>
-          <div><span>05</span><p><b>Передаю</b>Дизайн-ревью и согласование решений с разработкой.</p></div>
-        </div></div>
-      <div class="row"><span class="label">Навыки</span>
-        <div class="tags"><span>Figma</span><span>ProtoPie</span><span>UX-исследования</span><span>A/B-тесты</span><span>CJM</span><span>User Flow</span><span>Empathy map</span><span>Прототипирование</span><span>Дизайн-системы</span><span>Atomic Design</span><span>Mobile</span><span>Адаптивный дизайн</span><span>Photoshop</span><span>Illustrator</span><span>English B1</span></div></div>
-      <div class="row"><span class="label">Обучение</span>
-        <div class="lines">
-          <div><span>2027</span><p>Продуктовый дизайнер<small>Формфактор Технологии</small></p></div>
-          <div><span>2023</span><p>UX/UI-дизайнер<small>Contented</small></p></div>
-          <div><span>2022</span><p>Графический дизайнер<small>Логомашина</small></p></div>
-          <div><span>2022</span><p>Разработчик веб-приложений<small>Институт цифровых компетенций</small></p></div>
-          <div><span>2020</span><p>Колледж технологии и дизайна<small>Уфа</small></p></div>
-        </div></div>
-      <div class="row"><span class="label">Вне работы</span>
-        <div class="row__body"><p>Рисую, катаюсь на велосипеде, играю в компьютерные и настольные игры, в том числе в D&amp;D.</p></div></div>
-    </section>
-
-    <!-- ОПЫТ -->
     <section class="sec" id="experience">
       <div class="head"><span class="label">Опыт</span><h2>где я работала</h2></div>
       <article class="job">
@@ -725,7 +694,7 @@ const spy = new IntersectionObserver(es=>{
   if(home.hidden) return;
   es.forEach(e=>{ if(e.isIntersecting) setCurrent(e.target.id==='top' ? null : e.target.id); });
 },{rootMargin:'-45% 0px -50% 0px'});
-['top','projects','about','experience'].forEach(id=>spy.observe(document.getElementById(id)));
+['top','projects','experience'].forEach(id=>spy.observe(document.getElementById(id)));
 
 /* элементы, которые мягко появляются при прокрутке */
 function markReveal(root){
