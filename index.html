@@ -41,6 +41,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 a{color:inherit;text-decoration:none}
 p{margin:0}
 h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
+/* без висячих строк: короткие абзацы выравниваются по длине строк, длинные просто не оставляют слово в одиночестве */
+p,li,dd,figcaption{text-wrap:pretty;text-wrap:balance}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 img{display:block;max-width:100%}
 .muted{color:var(--muted)}
@@ -720,7 +722,7 @@ function markReveal(root){
 }
 
 /* типографика: короткие слова (в, и, из, для…) и тире не остаются в конце строки */
-const SHORT = /(^|[\s(«"—])([а-яёА-ЯЁa-zA-Z]{1,3}|ДЛЯ|для|без|под|над|при|про|что|как|или)\s+/g;
+const SHORT = /(^|[\s(«"—])(в|во|на|с|со|к|ко|у|о|об|обо|от|до|по|из|за|и|а|но|не|ни|же|ли|бы|для|без|под|над|при|про|что|как|или|В|Во|На|С|Со|К|У|О|Об|От|До|По|Из|За|И|А|Но|Не|Для|Без|Под|При|Про|Что|Как|Или)\s+/g;
 function typograph(root){
   const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {acceptNode:n=>/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
   let n; while((n = w.nextNode())){
