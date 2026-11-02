@@ -18,6 +18,7 @@
    Главная — одна страница: интро на первый экран → проекты → обо мне → опыт → контакты.
    Кейсы открываются отдельным видом. Моно-текст, ч/б, цвет дают только работы. */
 :root{
+  --fit:calc(100svh - var(--top) - var(--dock) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
   --bg:#FFFFFF; --ink:#111111; --muted:#6B6B68; --line:#E3E3E0; --tint:#F3F3F1;
   --cta:#111111; --cta-ink:#FFFFFF; --ok:#1C9A55;
   --f-logo:"Unbounded","Arial Black",system-ui,sans-serif;
@@ -126,12 +127,13 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 .tabs button[aria-selected="true"]::after{transform:none}
 .tabs sup{font-size:11px;color:var(--muted);margin-left:2px}
 .works.swap{animation:viewIn .45s var(--ease)}
-.works{display:grid;gap:clamp(48px,5.5vw,80px) clamp(16px,2vw,28px)}
+.works{--cg:clamp(16px,2vw,28px);--cap:max(240px,calc(var(--fit) - 240px));container-type:inline-size;display:grid;gap:clamp(48px,5.5vw,80px) var(--cg)}
 @media (min-width:768px){.works{grid-template-columns:repeat(2,minmax(0,1fr))}.work--wide{grid-column:1/-1}}
 .work{display:grid;gap:18px;align-content:start}
-.work__img{overflow:hidden;background:var(--tint);aspect-ratio:4/3;max-width:100%;position:relative}
-.work--wide .work__img{aspect-ratio:2/1}
-@media (max-width:767px){.work--wide .work__img{aspect-ratio:4/3}}
+/* высота от ширины колонки, но не больше экрана минус подпись: ширина всегда во всю колонку */
+.work__img{overflow:hidden;background:var(--tint);width:100%;height:min(75cqi,var(--cap));position:relative}
+@media (min-width:768px){.work__img{height:min(calc((100cqi - var(--cg)) / 2 * .75),var(--cap))}}
+@media (min-width:768px){.work--wide .work__img{height:min(50cqi,var(--cap))}}
 .work__img img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .work:hover .work__img img{transform:scale(1.03)}
 .work__num{position:absolute;top:14px;left:14px;font-size:12px;background:var(--bg);color:var(--ink);padding:4px 8px;font-variant-numeric:tabular-nums}
@@ -183,8 +185,8 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 .back{display:inline-flex;gap:8px;font-size:14px;color:var(--muted);margin-bottom:clamp(28px,4vw,48px);transition:color .2s,transform .3s var(--ease)}
 .back:hover{color:var(--ink);transform:translateX(-4px)}
 .case .head{gap:20px}
-.case-cover{background:var(--tint);margin-bottom:8px;overflow:hidden}
-.case-cover img{width:100%;height:auto}
+.case-cover{background:var(--tint);margin-bottom:8px;overflow:hidden;display:flex;justify-content:center}
+.case-cover img{width:auto;max-width:100%;height:auto;max-height:max(260px,calc(var(--fit) - 140px))}
 .meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px;padding-block:36px 12px;margin:0}
 @media (min-width:1024px){.meta{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .meta div{display:grid;gap:6px;min-width:0}
@@ -226,20 +228,20 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 .gal figcaption{font-size:13.5px;line-height:1.6;color:var(--muted);max-width:70ch}
 .g-img{background:var(--tint);overflow:hidden}
 .g-img img{width:100%;height:auto}
-.phones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2.2vw,36px);padding:clamp(18px,3.4vw,56px) clamp(18px,6vw,120px);background:var(--tint)}
-.phones img{width:100%;height:auto;border-radius:clamp(10px,1.2vw,18px);box-shadow:0 14px 34px rgb(0 0 0 / .10)}
+.phones{display:grid;grid-template-columns:repeat(3,auto);justify-content:center;gap:clamp(12px,2.2vw,36px);padding:clamp(18px,3.4vw,56px) clamp(18px,6vw,120px);background:var(--tint)}
+.phones img{width:auto;max-width:100%;height:min(calc(var(--fit) - 200px),620px);border-radius:clamp(10px,1.2vw,18px);box-shadow:0 14px 34px rgb(0 0 0 / .10)}
 @media (max-width:639px){
   .phones{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;padding:18px}
-  .phones img{scroll-snap-align:center}
+  .phones img{scroll-snap-align:center;width:100%;height:auto}
 }
-.frame{height:clamp(420px,70vh,780px);overflow-y:auto;background:var(--tint);border:1px solid var(--line);overscroll-behavior:contain}
+.frame{height:clamp(360px,calc(var(--fit) - 140px),720px);overflow-y:auto;background:var(--tint);border:1px solid var(--line);overscroll-behavior:contain}
 .frame img{width:100%;height:auto}
 .hint{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 /* скрин с пояснением, слайдер до/после, лайтбокс */
 .shot{display:grid;gap:18px;align-items:start}
 @media (min-width:1024px){.shot{grid-template-columns:minmax(0,1.75fr) minmax(260px,1fr);gap:28px}}
 .media{position:relative;background:var(--tint);overflow:hidden}
-.media>img{width:100%;height:auto}
+.media>img{width:auto;max-width:100%;height:auto;max-height:max(260px,calc(var(--fit) - 120px));margin-inline:auto}
 .pill{position:absolute;top:12px;z-index:3;font:500 12px/1 var(--f-mono);letter-spacing:.04em;padding:7px 10px;background:var(--ink);color:var(--bg);pointer-events:none}
 .pill--l{left:12px}.pill--r{right:12px}
 .zoom{position:absolute;z-index:4;bottom:12px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:7px;font:500 12px/1 var(--f-mono);padding:7px 11px;background:var(--bg);color:var(--ink);border:1px solid var(--line);cursor:zoom-in;transition:border-color .2s}
@@ -319,6 +321,16 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
 .totop{position:fixed;z-index:45;right:max(16px,calc(env(safe-area-inset-right,0px) + 16px));bottom:calc(var(--dock) + 16px + env(safe-area-inset-bottom,0px));width:46px;height:46px;display:grid;place-items:center;background:var(--ink);color:var(--bg);border:0;cursor:pointer;animation:viewIn .35s var(--ease);transition:transform .25s var(--ease)}
 .totop:hover{transform:translateY(-3px)}
 .totop svg{width:18px;height:18px}
+/* бросок d20 */
+.d20{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:6px}
+.d20__btn{gap:9px;font-family:var(--f-mono)}
+.d20__btn svg{width:18px;height:18px;transition:transform .6s var(--ease)}
+.d20__btn.is-rolling svg{transform:rotate(360deg)}
+.d20__out{display:flex;align-items:baseline;gap:12px;min-height:44px;font-family:var(--f-text);font-size:15.5px;line-height:1.5;max-width:52ch}
+.d20__out:empty{display:none}
+.d20__out b{font-family:var(--f-logo);font-weight:700;font-size:30px;line-height:1;min-width:1.5em;font-variant-numeric:tabular-nums}
+.d20__out.is-crit b{animation:crit .6s var(--ease)}
+@keyframes crit{40%{transform:scale(1.35)}}
 .toast{position:fixed;left:50%;bottom:calc(var(--dock) + 16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;font-size:13px;z-index:80;animation:viewIn .3s var(--ease)}
 
 /* ── анимации: короткая загрузка интро и мягкое появление при прокрутке ── */
@@ -413,6 +425,12 @@ main{padding-bottom:calc(var(--dock) + 24px + env(safe-area-inset-bottom,0px))}
             <li>Интернет-магазин: веб-баннеры, карточки товаров, контент для Telegram</li>
           </ul></div>
       </article>
+      <div class="row" id="offwork"><span class="label">Вне работы</span>
+        <div class="row__body"><p>Рисую, катаюсь на велосипеде, играю в компьютерные и настольные игры, в том числе в D&amp;D.</p>
+          <div class="d20">
+            <button class="ghost d20__btn" id="d20" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 21 7v10l-9 5-9-5V7z"/><path d="M12 2 7.5 9.5h9zM7.5 9.5 3 7M16.5 9.5 21 7M7.5 9.5 12 17l4.5-7.5M12 17v5M12 17l-9 0M12 17h9"/></svg>Бросить d20</button>
+            <p class="d20__out" id="d20out" aria-live="polite"></p>
+          </div></div></div>
       <div class="inline-links">
         <a href="https://ufa.hh.ru/resume/de832448ff107c7ecb0039ed1f324b61776256" target="_blank" rel="noopener">Резюме на hh.ru</a>
       </div>
@@ -802,6 +820,30 @@ window.addEventListener('hashchange', ()=>requestAnimationFrame(checkTop));
 totop.addEventListener('click', ()=>{
   const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
   window.scrollTo({top:0, behavior: reduce ? 'instant' : 'smooth'});
+});
+
+/* d20: случайный исход с дизайнерским смыслом */
+const D20 = [
+  [1,1,'Критический провал: разработчик нашёл в Figma слой «Group 847».'],
+  [2,5,'Неудача: заказчик просит сделать логотип побольше.'],
+  [6,9,'Так себе: правки пришли в пятницу вечером.'],
+  [10,13,'Неплохо: пользователь нашёл кнопку с первого раза.'],
+  [14,16,'Успех: дизайн-ревью прошло без замечаний.'],
+  [17,19,'Отличный бросок: компонент переиспользовали в трёх продуктах.'],
+  [20,20,'Критический успех: макет сдан до дедлайна.']];
+const d20Btn = document.getElementById('d20'), d20Out = document.getElementById('d20out');
+d20Btn.addEventListener('click', ()=>{
+  const roll = 1 + Math.floor(Math.random()*20);
+  const text = D20.find(r=>roll>=r[0] && roll<=r[1])[2];
+  const show = n=>{ d20Out.innerHTML = `<b>${n}</b><span></span>`; };
+  const finish = ()=>{
+    d20Out.classList.toggle('is-crit', roll===20 || roll===1);
+    d20Out.innerHTML = `<b>${roll}</b><span>${text}</span>`; typograph(d20Out);
+    d20Btn.classList.remove('is-rolling'); d20Btn.disabled = false;
+  };
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){ finish(); return; }
+  d20Btn.disabled = true; d20Btn.classList.add('is-rolling'); d20Out.classList.remove('is-crit');
+  let t = 0; const spin = setInterval(()=>{ show(1 + Math.floor(Math.random()*20)); if(++t > 9){ clearInterval(spin); finish(); } }, 60);
 });
 
 /* местное время в шапке — удобно рекрутеру из другого часового пояса */
